@@ -1,0 +1,1066 @@
+{% extends "base.html" %}
+
+{% set room_types = {
+    'Стандарт': 'Стандарт',
+    'Люкс': 'Люкс',
+    'Семейный': 'Семейный',
+    'Премиум': 'Премиум'
+} %}
+
+{% block content %}
+<div class="home-container">
+    <section class="hero-section">
+        <div class="hero-background" id="heroBackground">
+            <div class="hero-particles" id="particles"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text" data-aos="fade-up">
+                <h1 class="hero-title">
+                    <span class="title-line">Добро пожаловать в</span>
+                    <span class="title-main">СУГДДЕЛЮКС</span>
+                </h1>
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                    Место, где комфорт и отдых соединяются
+                </p>
+                <div class="hero-badges" data-aos="fade-up" data-aos-delay="400">
+                    <span class="badge">🏆 Лучший отель 2024</span>
+                    <span class="badge">⭐ 4 звезды</span>
+                    <span class="badge">💎 Высокий уровень сервиса</span>
+                </div>
+                <div class="hero-actions" data-aos="fade-up" data-aos-delay="600">
+                    <a href="/rooms?lang=ru" class="btn-primary">
+                        🏨 Посмотреть номера
+                        <span class="btn-sparkle">✨</span>
+                    </a>
+                    <a href="/booking/1?lang=ru" class="btn-secondary">
+                        ⚡ Быстрое бронирование
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual" data-aos="zoom-in" data-aos-delay="800">
+                <div class="floating-card">
+                    <img src="/static/images/room-luxury.jpg" alt="Номер люкс" onerror="this.src='/static/images/room-default.jpg'">
+                    <div class="card-glow"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-text">Прокрутите вниз</div>
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
+
+    <section class="quick-booking">
+        <div class="container">
+            <div class="booking-card" data-aos="fade-up">
+                <h2><img src="/static/images/icons/free-animated-icon-booking-19035085.gif" width="100px" height="100px" style="vertical-align: middle;" alt="бронирование"> Быстрое бронирование</h2>
+                <div class="booking-form">
+                    <div class="form-group">
+                        <label>Дата заезда</label>
+                        <input type="date" class="form-input" id="checkinDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Дата выезда</label>
+                        <input type="date" class="form-input" id="checkoutDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Количество гостей</label>
+                        <select class="form-input" id="guestsCount">
+                            <option value="1">1 гость</option>
+                            <option value="2" selected>2 гостя</option>
+                            <option value="3">3 гостя</option>
+                            <option value="4">4 и более</option>
+                        </select>
+                    </div>
+                    <button class="btn-booking" onclick="quickBook()">
+                        Найти номер
+                        <span class="btn-pulse">🔍</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Почему выбирают <span class="highlight">СУГДДЕЛЮКС</span></h2>
+                <p>Преимущества, которые сделают ваш отдых незабываемым</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="feature-icon"><img src="/static/images/icons/free-animated-icon-locations-19028362.gif" width="100px" height="100px" alt="удобное расположение"></div>
+                    <h3>Удобное расположение</h3>
+                    <p>В центре города, рядом с достопримечательностями и основными транспортными магистралями</p>
+                    <div class="feature-stats">
+                        <span>🚇 5 минут до транспорта</span>
+                        <span>🏛️ 10 минут до центра</span>
+                    </div>
+                </div>
+                <div class="feature-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="feature-icon"><img src="/static/images/icons/bedroom_19035054.gif" width="100px" height="100px" alt="комфортные номера"></div>
+                    <h3>Роскошные номера</h3>
+                    <p>Современный интерьер, современное оборудование и красивый вид на город</p>
+                    <div class="feature-stats">
+                        <span>🛏️ Удобные кровати</span>
+                        <span>🌅 Панорамный вид</span>
+                    </div>
+                </div>
+                <div class="feature-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="feature-icon"><img src="/static/images/icons/luggage-cart_19034857.gif" width="100px" height="100px" alt="высокий уровень сервиса"></div>
+                    <h3>Высокий уровень сервиса</h3>
+                    <p>Круглосуточный прием гостей и особое внимание к каждой детали обслуживания</p>
+                    <div class="feature-stats">
+                        <span>🕐 Обслуживание 24/7</span>
+                        <span>👑 Индивидуальный подход</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="popular-rooms">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Популярные <span class="highlight">номера</span></h2>
+                <p>Самые популярные типы размещения</p>
+            </div>
+            <div class="rooms-showcase">
+                {% for room in rooms[:3] %}
+                <div class="room-showcase-card" data-aos="zoom-in" data-aos-delay="{{ loop.index * 100 }}">
+                    <div class="room-showcase-image">
+                        <img src="{{ room.image_url }}" alt="{{ room.type }}" onerror="this.src='/static/images/room-default.jpg'">
+                        <div class="room-overlay">
+                            <div class="room-price">от {{ "%.0f"|format(room.price) }} сомони</div>
+                            <div class="room-actions">
+                                <a href="/booking/{{ room.id }}?lang=ru" class="btn-book">Забронировать</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-showcase-content">
+                        <h3>{{ room_types[room.type] }}</h3>
+                        <!-- Описание на русском языке -->
+                        <p>{% set desc = room.description_ru or room.description %}
+                           {% if desc %}
+                               {{ desc }}
+                           {% else %}
+                               {% if room.type == 'Стандарт' %}
+                                   Уютный стандартный номер с современной мебелью
+                               {% elif room.type == 'Люкс' %}
+                                   Роскошный люкс с гостиной зоной
+                               {% elif room.type == 'Семейный' %}
+                                   Семейный номер для комфортного отдыха
+                               {% else %}
+                                   Комфортабельный номер с современным ремонтом
+                               {% endif %}
+                           {% endif %}
+                        </p>
+                        <div class="room-meta">
+                            <span>👥 {{ room.capacity }} гостя</span>
+                            <span>📏 30 м²</span>
+                            <span>⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="showcase-actions" data-aos="fade-up">
+                <a href="/rooms?lang=ru" class="btn-view-all">
+                    Посмотреть все номера
+                    <span class="btn-arrow">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-number" data-count="10000">0</div>
+                    <div class="stat-label">Довольных гостей</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-number" data-count="15">0</div>
+                    <div class="stat-label">Лет опыта</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">% Удовлетворенности</div>
+                </div>
+                <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-number" data-count="24">0</div>
+                    <div class="stat-label">Часа обслуживания</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Мнения <span class="highlight">гостей</span></h2>
+                <p>Что говорят наши гости</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial-card" data-aos="fade-right">
+                    <div class="testimonial-content">
+                        <div class="testimonial-text">
+                            "Замечательный отель! Обслуживание на высшем уровне, номера удобные и чистые. Обязательно вернемся!"
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👨‍💼</div>
+                            <div class="author-info">
+                                <strong>Анна Петрова</strong>
+                                <span>Деловая поездка</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up">
+                    <div class="testimonial-content">
+                        <div class="testimonial-text">
+                            "Провели медовый месяц здесь — всё было превосходно! СПА, ресторан и обслуживание на высоте."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">💑</div>
+                            <div class="author-info">
+                                <strong>Семён и Ирина</strong>
+                                <span>Медовый месяц</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-left">
+                    <div class="testimonial-content">
+                        <div class="testimonial-text">
+                            "Очень удобное расположение, спокойная атмосфера и комфортные номера. Всем рекомендую!"
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👨‍👩‍👧</div>
+                            <div class="author-info">
+                                <strong>Семья Ивановых</strong>
+                                <span>Отдых с детьми</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Готовы к незабываемому отдыху?</h2>
+                <p>Забронируйте номер сейчас и воспользуйтесь специальными предложениями</p>
+                <div class="cta-actions">
+                    <a href="/rooms?lang=ru" class="btn-cta-primary">
+                        🏨 Выбрать номер
+                    </a>
+                    <a href="/about?lang=ru" class="btn-cta-secondary">
+                        📞 Связаться с нами
+                    </a>
+                </div>
+                <div class="cta-features">
+                    <span>✅ Бесплатная отмена</span>
+                    <span>✅ Лучшая цена</span>
+                    <span>✅ Мгновенное подтверждение</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Стили такие же как в таджикской версии -->
+<style>
+/* Базовые стили (оставляем как есть) */
+.home-container {
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+}
+
+.highlight {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('/static/images/hotel-hero-bg.jpg') center/cover;
+    opacity: 0.4;
+}
+
+.hero-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.hero-title {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+}
+
+.title-line {
+    display: block;
+    font-size: 2rem;
+    opacity: 0.9;
+}
+
+.title-main {
+    display: block;
+    font-size: 5rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #fff, #3498db);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.hero-badges {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    background: rgba(255,255,255,0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    color: white;
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(231, 76, 60, 0.6);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+.btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+}
+
+.btn-sparkle {
+    animation: sparkle 2s infinite;
+}
+
+.hero-visual {
+    position: relative;
+}
+
+.floating-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-card img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.card-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(52, 152, 219, 0.3), transparent);
+    animation: glow 3s ease-in-out infinite;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    opacity: 0.8;
+}
+
+.scroll-text {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.scroll-arrow {
+    animation: bounce 2s infinite;
+    font-size: 1.5rem;
+}
+
+.quick-booking {
+    padding: 4rem 0;
+    background: #f8f9fa;
+}
+
+.booking-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.booking-card h2 {
+    margin-bottom: 2rem;
+    color: #2c3e50;
+}
+
+.booking-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    align-items: end;
+}
+
+.form-group {
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-weight: bold;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.btn-booking {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-booking:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-pulse {
+    animation: pulse 1.5s infinite;
+}
+
+.features-section {
+    padding: 6rem 0;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #f8f9fa;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.feature-icon img {
+    width: 80px;
+    height: 80px;
+}
+
+.feature-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.feature-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #3498db;
+}
+
+.popular-rooms {
+    padding: 6rem 0;
+    background: #f8f9fa;
+}
+
+.rooms-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.room-showcase-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.room-showcase-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.room-showcase-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.room-showcase-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.room-showcase-card:hover .room-showcase-image img {
+    transform: scale(1.1);
+}
+
+.room-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.room-showcase-card:hover .room-overlay {
+    opacity: 1;
+}
+
+.room-price {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: right;
+}
+
+.room-actions {
+    text-align: center;
+}
+
+.btn-book {
+    background: #e74c3c;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-book:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+.room-showcase-content {
+    padding: 1.5rem;
+}
+
+.room-showcase-content h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.room-showcase-content p {
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    min-height: 70px;
+}
+
+.room-meta {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #3498db;
+}
+
+.showcase-actions {
+    text-align: center;
+}
+
+.btn-view-all {
+    background: #3498db;
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-view-all:hover {
+    background: #2980b9;
+    transform: translateX(5px);
+}
+
+.btn-arrow {
+    transition: transform 0.3s ease;
+}
+
+.btn-view-all:hover .btn-arrow {
+    transform: translateX(3px);
+}
+
+.stats-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    text-align: center;
+}
+
+.stat-item {
+    padding: 2rem;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #3498db, #e74c3c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.testimonials-section {
+    padding: 6rem 0;
+    background: #f8f9fa;
+}
+
+.testimonials-slider {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.testimonial-text {
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: #555;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    font-size: 2rem;
+}
+
+.author-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-info strong {
+    color: #2c3e50;
+}
+
+.author-info span {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.cta-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn-cta-primary, .btn-cta-secondary {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-cta-primary {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-cta-primary:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+}
+
+.btn-cta-secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.5);
+}
+
+.btn-cta-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+}
+
+.cta-features {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0.8;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@media (max-width: 768px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .title-main {
+        font-size: 3rem;
+    }
+    
+    .hero-actions {
+        justify-content: center;
+    }
+    
+    .booking-form {
+        grid-template-columns: 1fr;
+    }
+    
+    .features-grid,
+    .rooms-showcase,
+    .testimonials-slider {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .cta-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .feature-icon img {
+        width: 60px;
+        height: 60px;
+    }
+}
+</style>
+
+<script>
+// Те же самые скрипты, что в index.html
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        let current = 0;
+        const timer = setInterval(() => {
+            current += Math.ceil(target / 50);
+            if (current >= target) {
+                counter.textContent = target + (counter.getAttribute('data-count') === '98' ? '%' : '');
+                clearInterval(timer);
+            } else {
+                counter.textContent = current;
+            }
+        }, 40);
+    });
+}
+
+function quickBook() {
+    const checkin = document.getElementById('checkinDate').value;
+    const checkout = document.getElementById('checkoutDate').value;
+    const guests = document.getElementById('guestsCount').value;
+    if (!checkin || !checkout) {
+        alert('Пожалуйста, выберите дату заезда и выезда');
+        return;
+    }
+    window.location.href = `/rooms?checkin=${checkin}&checkout=${checkout}&guests=${guests}&lang=ru`;
+}
+
+function initParallax() {
+    const hero = document.querySelector('.hero-section');
+    const background = document.getElementById('heroBackground');
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+        if (background && scrolled < hero.offsetHeight) {
+            background.style.transform = `translateY(${rate}px)`;
+        }
+    });
+}
+
+function createParticles() {
+    const container = document.getElementById('particles');
+    if (!container) return;
+    for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = Math.random() * 5 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.background = 'rgba(255,255,255,0.3)';
+        particle.style.borderRadius = '50%';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animation = `float ${Math.random() * 10 + 5}s infinite ease-in-out`;
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(particle);
+    }
+}
+
+function setMinDates() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('checkinDate').min = today;
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    document.getElementById('checkoutDate').min = tomorrow.toISOString().split('T')[0];
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                observer.unobserve(entry.target);
+            }
+        });
+    });
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) observer.observe(statsSection);
+    initParallax();
+    createParticles();
+    setMinDates();
+    document.getElementById('checkinDate').addEventListener('change', function() {
+        const checkin = new Date(this.value);
+        const checkout = new Date(checkin);
+        checkout.setDate(checkout.getDate() + 1);
+        document.getElementById('checkoutDate').min = checkout.toISOString().split('T')[0];
+        if (new Date(document.getElementById('checkoutDate').value) < checkout) {
+            document.getElementById('checkoutDate').value = checkout.toISOString().split('T')[0];
+        }
+    });
+});
+
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-20px) rotate(120deg); }
+        66% { transform: translateY(10px) rotate(240deg); }
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %}

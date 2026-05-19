@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>{% block title %}СУҒДДЕЛЮКС{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ========== ГАМБУРГЕР МЕНЮ ========== */
+        .hamburger-menu {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            z-index: 1100;
+        }
+
+        .hamburger-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1101;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.6);
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 24px;
+            height: 2.5px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn.open span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger-btn.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+            z-index: 1100;
+            transition: right 0.3s ease;
+            box-shadow: -2px 0 15px rgba(0,0,0,0.2);
+            overflow-y: auto;
+        }
+
+        .side-menu.open {
+            right: 0;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1099;
+            display: none;
+        }
+
+        .menu-overlay.open {
+            display: block;
+        }
+
+        .side-menu-header {
+            padding: 30px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .side-menu-header h2 {
+            color: white;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .side-menu-header p {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            margin: 8px 0 0;
+        }
+
+        .side-menu-items {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .side-menu-items li {
+            margin: 0;
+            padding: 0;
+        }
+
+        .side-menu-items a, .side-menu-items .menu-chat-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border-right: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .side-menu-items a:hover, .side-menu-items .menu-chat-item:hover {
+            background: rgba(52, 152, 219, 0.2);
+            border-right-color: #3498db;
+        }
+
+        .menu-icon {
+            font-size: 22px;
+            min-width: 35px;
+            text-align: center;
+        }
+
+        .menu-label {
+            flex: 1;
+        }
+
+        .menu-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.1);
+            margin: 15px 20px;
+        }
+
+        .menu-lang-switcher {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .lang-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 12px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .lang-btn:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        /* ========== МОБИЛЬНЫЙ ЧАТ (УЛУЧШЕННЫЙ) ========== */
+        .chat-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #f5f7fa;
+            z-index: 10000;
+            flex-direction: column;
+        }
+
+        .chat-page.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            background: #f5f7fa;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Стили для сообщений */
+        .message-user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 18px;
+            border-bottom-right-radius: 5px;
+            max-width: 85%;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message-ai {
+            align-self: flex-start;
+            background: white;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+            max-width: 85%;
+            word-wrap: break-word;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .message-system {
+            align-self: center;
+            background: #fff3cd;
+            color: #856404;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 12px;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .message-user strong, .message-ai strong {
+            font-weight: 600;
+        }
+
+        /* Панель команд */
+        .commands-panel {
+            background: white;
+            border-top: 1px solid #e9ecef;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .toggle-commands-btn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+        }
+
+        .commands-dropdown {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .commands-dropdown.show {
+            display: block;
+        }
+
+        .commands-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .cmd-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #2c3e50;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cmd-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Панель ввода */
+        .chat-input-container {
+            padding: 12px;
+            background: white;
+            border-top: 1px solid #e9ecef;
+            display: flex;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            background: #f8f9fa;
+        }
+
+        .chat-input:focus {
+            border-color: #3498db;
+            background: white;
+        }
+
+        .send-chat-btn, .voice-chat-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .voice-chat-btn {
+            background: #e74c3c;
+        }
+
+        .voice-chat-btn.recording {
+            background: #ff4757;
+            animation: pulse 1s infinite;
+        }
+
+        .mobile-typing-indicator {
+            display: none;
+            padding: 10px 15px;
+            font-style: italic;
+            color: #666;
+            background: #f1f1f1;
+            font-size: 12px;
+        }
+
+        .action-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px;
+        }
+
+        .email-form-container {
+            margin: 15px 0;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 12px;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #90caf9;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .email-submit-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Кнопка отмены бронирования */
+        .cancel-booking-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 8px;
+            transition: all 0.3s;
+        }
+
+        .cancel-booking-btn:hover {
+            background: #c0392b;
+            transform: scale(1.02);
+        }
+
+        .booking-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #3498db;
+        }
+
+        /* Десктопный чат */
+        #aiChatWidget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+
+        #chatWindow {
+            display: none;
+            width: 380px;
+            height: 550px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        #chatWindow.open {
+            display: flex;
+        }
+
+        #chatToggle {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .desktop-commands-panel {
+            padding: 10px;
+            border-bottom: 1px solid #e9ecef;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        .desktop-commands-panel .commands-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 10px;
+            right: auto;
+            bottom: auto;
+            margin-top: 5px;
+            min-width: 280px;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* Навигация */
+        .navbar {
+            background: linear-gradient(135deg, #1a252f, #2c3e50);
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #3498db;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 10px;
+            margin-left: 20px;
+        }
+
+        .lang-switcher button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .lang-switcher button.active {
+            background: #3498db;
+            border-color: #3498db;
+        }
+
+        .lang-switcher button:hover {
+            background: #3498db;
+        }
+
+        footer {
+            background: #1a252f;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 0rem;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger-menu { display: block; }
+            .navbar { display: none; }
+            #aiChatWidget { display: none !important; }
+            
+            .chat-messages {
+                padding: 12px;
+            }
+            
+            .message-user, .message-ai {
+                max-width: 90%;
+                font-size: 14px;
+            }
+            
+            .commands-grid {
+                gap: 6px;
+            }
+            
+            .cmd-btn {
+                padding: 6px 10px;
+                font-size: 11px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .chat-page { display: none !important; }
+            .hamburger-menu { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ГАМБУРГЕР МЕНЮ -->
+<div class="hamburger-menu">
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <h2 id="sideMenuTitle">🏨 СУҒДДЕЛЮКС</h2>
+            <p id="sideMenuSubtitle">Меҳмонхонаи шумо дар Хуҷанд</p>
+        </div>
+        <ul class="side-menu-items">
+            <li><a href="/" id="sideHome" class="nav-link"><span class="menu-icon">🏠</span><span class="menu-label">Асосӣ</span></a></li>
+            <li><a href="/rooms" id="sideRooms" class="nav-link"><span class="menu-icon">🏨</span><span class="menu-label">Ҳуҷраҳо</span></a></li>
+            <li><a href="/about" id="sideAbout" class="nav-link"><span class="menu-icon">ℹ️</span><span class="menu-label">Дар бораи мо</span></a></li>
+            <li><a href="/admin/login" id="sideAdmin" class="nav-link"><span class="menu-icon">🔧</span><span class="menu-label">Идоракунӣ</span></a></li>
+            <li><div class="menu-chat-item" onclick="openMobileChat(); closeMenu();"><span class="menu-icon">🤖</span><span class="menu-label" id="sideChatLabel">AI Ёрдамчи</span></div></li>
+        </ul>
+        <div class="menu-divider"></div>
+        <div class="menu-lang-switcher">
+            <button class="lang-btn" data-lang="tj" onclick="switchLanguage('tj')">🇹🇯 Тоҷикӣ</button>
+            <button class="lang-btn" data-lang="ru" onclick="switchLanguage('ru')">🇷🇺 Русский</button>
+            <button class="lang-btn" data-lang="en" onclick="switchLanguage('en')">🇬🇧 English</button>
+        </div>
+    </div>
+</div>
+
+<!-- ДЕСКТОПНАЯ НАВИГАЦИЯ -->
+<nav class="navbar">
+    <div class="nav-container">
+        <h1 class="nav-logo" id="navLogo">СУҒДДЕЛЮКС</h1>
+        <ul class="nav-menu">
+            <li><a href="/" id="navHome">Асосӣ</a></li>
+            <li><a href="/rooms" id="navRooms">Ҳуҷраҳо</a></li>
+            <li><a href="/about" id="navAbout">Дар бораи мо</a></li>
+            <li><a href="/admin/login" id="navAdmin">Идоракунӣ</a></li>
+            <li>
+                <div class="lang-switcher">
+                    <button data-lang="tj" onclick="switchLanguage('tj')">🇹🇯 TJ</button>
+                    <button data-lang="ru" onclick="switchLanguage('ru')">🇷🇺 RU</button>
+                    <button data-lang="en" onclick="switchLanguage('en')">🇬🇧 EN</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<!-- МОБИЛЬНЫЙ ЧАТ (ПОЛНОСТЬЮ ПЕРЕРАБОТАННЫЙ) -->
+<div class="chat-page" id="mobileChatPage">
+    <div class="chat-header">
+        <h2 id="mobileChatTitle"><i class="fas fa-robot"></i> AI Ёрдамчи</h2>
+        <button class="close-chat" onclick="closeMobileChat()">✕</button>
+    </div>
+    
+    <div class="chat-messages" id="mobileChatMessages">
+        <div class="message-ai">
+            <strong>AI:</strong> <span id="welcomeMessage">Салом! Ман ёрдамчии шумо дар меҳмонхона ҳастам. Чӣ тавр метавонам кӯмак расонам?</span>
+        </div>
+    </div>
+    
+    <div class="mobile-typing-indicator" id="mobileTypingIndicator">
+        <i class="fas fa-spinner fa-pulse"></i> <span id="typingText">AI навишта истодааст...</span>
+    </div>
+    
+    <div class="commands-panel">
+        <button class="toggle-commands-btn" onclick="toggleMobileCommands()">
+            <i class="fas fa-terminal"></i> <span id="commandsBtnText">Фармонҳо</span>
+            <i class="fas fa-chevron-down" style="font-size: 12px;"></i>
+        </button>
+        <div class="commands-dropdown" id="mobileCommandsDropdown">
+            <div class="commands-grid" id="mobileCommandsGrid"></div>
+        </div>
+    </div>
+    
+    <div class="chat-input-container">
+        <input type="text" class="chat-input" id="mobileChatInput" placeholder="Дар бораи меҳмонхона савол пурсед...">
+        <button class="voice-chat-btn" id="mobileVoiceBtn" onclick="startVoiceInput('mobile')">
+            <i class="fas fa-microphone"></i>
+        </button>
+        <button class="send-chat-btn" onclick="sendMobileMessage()">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
+
+<!-- ДЕСКТОПНЫЙ ЧАТ -->
+<div id="aiChatWidget">
+    <div id="chatWindow">
+        <div style="background: linear-gradient(135deg, #3498db, #2980b9); color: white; padding: 15px 20px; display: flex; justify-content: space-between;">
+            <div><strong><i class="fas fa-robot"></i> <span id="desktopChatTitle">AI Ёрдамчи</span></strong><div style="font-size: 12px;" id="desktopChatSubtitle">Меҳмонхона "СУҒДДЕЛЮКС"</div></div>
+            <button id="closeChat" style="background: none; border: none; color: white; font-size: 18px; cursor: pointer;">✕</button>
+        </div>
+        <div class="desktop-commands-panel">
+            <button class="toggle-commands-btn" onclick="toggleDesktopCommands()">
+                <i class="fas fa-terminal"></i> <span id="desktopCommandsBtnText">Фармонҳо</span>
+            </button>
+            <div class="commands-dropdown" id="desktopCommandsDropdown">
+                <div class="commands-grid" id="desktopCommandsGrid"></div>
+            </div>
+        </div>
+        <div id="chatMessages" style="height: 350px; overflow-y: auto; padding: 15px; background: #f8f9fa; display: flex; flex-direction: column; gap: 10px;">
+            <div class="message-ai" style="max-width: 85%;">
+                <strong>AI:</strong> <span id="desktopWelcomeMessage">Салом! Ман ёрдамчии шумо дар меҳмонхона ҳастам. Чӣ тавр метавонам кӯмак расонам?</span>
+            </div>
+        </div>
+        <div id="typingIndicator" style="display: none; padding: 10px 15px; font-style: italic; color: #666; background: #f1f1f1;">
+            <i class="fas fa-spinner fa-pulse"></i> <span id="desktopTypingText">AI навишта истодааст...</span>
+        </div>
+        <div style="padding: 15px; border-top: 1px solid #e9ecef;">
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="chatInput" placeholder="Дар бораи меҳмонхона савол пурсед..." style="flex:1; padding:12px; border:1px solid #ddd; border-radius:25px;">
+                <button id="voiceBtn" style="background:#e74c3c; color:white; border:none; border-radius:50%; width:45px; height:45px;"><i class="fas fa-microphone"></i></button>
+                <button id="sendMessage" style="background:#3498db; color:white; border:none; border-radius:50%; width:45px; height:45px;"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    <button id="chatToggle"><i class="fas fa-comment-dots"></i></button>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <p id="footerText">© 2024 СУҒДДЕЛЮКС. Ҳама ҳуқуқҳо ҳифз шудаанд.</p>
+        <p id="footerAddress">шаҳри Хуҷанд, кӯчаи Раҳим Ҷалил, 24 | +992 (88) 999-30-90</p>
+    </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+AOS.init({ duration: 800, once: true });
+
+// ========== ПЕРЕВОДЫ ==========
+const translations = {
+    tj: {
+        navHome: "Асосӣ", navRooms: "Ҳуҷраҳо", navAbout: "Дар бораи мо", navAdmin: "Идоракунӣ",
+        navLogo: "СУҒДДЕЛЮКС", navChat: "AI Ёрдамчи",
+        sideMenuTitle: "🏨 СУҒДДЕЛЮКС", sideMenuSubtitle: "Меҳмонхонаи шумо дар Хуҷанд",
+        sideHome: "Асосӣ", sideRooms: "Ҳуҷраҳо", sideAbout: "Дар бораи мо", sideAdmin: "Идоракунӣ", sideChat: "AI Ёрдамчи",
+        welcomeMessage: "Салом! Ман ёрдамчии шумо дар меҳмонхона ҳастам. Чӣ тавр метавонам кӯмак расонам?",
+        commandsBtn: "Фармонҳо", typingText: "AI навишта истодааст...",
+        chatPlaceholder: "Дар бораи меҳмонхона савол пурсед...",
+        chatTitle: "AI Ёрдамчи", chatSubtitle: "Меҳмонхона \"СУҒДДЕЛЮКС\"",
+        cmdFreeRooms: "Ҳуҷраҳои озод", cmdMyBookings: "Фармоишҳои ман", cmdAboutHotel: "Дар бораи меҳмонхона",
+        cmdPrices: "Нархҳо", cmdServices: "Хизматрасонӣ", cmdAttractions: "Ҷойҳои тамошобоб",
+        cmdRestaurants: "Ошхонаҳои наздик", cmdHowToGet: "Чи тавр расидан", cmdContact: "Тамос",
+        footerText: "© 2024 СУҒДДЕЛЮКС. Ҳама ҳуқуқҳо ҳифз шудаанд.",
+        footerAddress: "шаҳри Хуҷанд, кӯчаи Раҳим Ҷалил, 24 | +992 (88) 999-30-90"
+    },
+    ru: {
+        navHome: "Главная", navRooms: "Номера", navAbout: "О нас", navAdmin: "Управление",
+        navLogo: "СУГДДЕЛЮКС", navChat: "AI Помощник",
+        sideMenuTitle: "🏨 СУГДДЕЛЮКС", sideMenuSubtitle: "Ваш отель в Худжанде",
+        sideHome: "Главная", sideRooms: "Номера", sideAbout: "О нас", sideAdmin: "Управление", sideChat: "AI Помощник",
+        welcomeMessage: "Здравствуйте! Я ваш помощник в отеле. Чем могу помочь?",
+        commandsBtn: "Команды", typingText: "AI печатает...",
+        chatPlaceholder: "Задайте вопрос об отеле...",
+        chatTitle: "AI Помощник", chatSubtitle: "Отель \"СУГДДЕЛЮКС\"",
+        cmdFreeRooms: "Свободные номера", cmdMyBookings: "Мои брони", cmdAboutHotel: "Об отеле",
+        cmdPrices: "Цены", cmdServices: "Услуги", cmdAttractions: "Достопримечательности",
+        cmdRestaurants: "Рестораны рядом", cmdHowToGet: "Как добраться", cmdContact: "Контакты",
+        footerText: "© 2024 СУГДДЕЛЮКС. Все права защищены.",
+        footerAddress: "г. Худжанд, ул. Рахим Джалил, 24 | +992 (88) 999-30-90"
+    },
+    en: {
+        navHome: "Home", navRooms: "Rooms", navAbout: "About", navAdmin: "Admin",
+        navLogo: "SUGDDELUXE", navChat: "AI Assistant",
+        sideMenuTitle: "🏨 SUGDDELUXE", sideMenuSubtitle: "Your hotel in Khujand",
+        sideHome: "Home", sideRooms: "Rooms", sideAbout: "About", sideAdmin: "Admin", sideChat: "AI Assistant",
+        welcomeMessage: "Hello! I'm your hotel assistant. How can I help you?",
+        commandsBtn: "Commands", typingText: "AI is typing...",
+        chatPlaceholder: "Ask about the hotel...",
+        chatTitle: "AI Assistant", chatSubtitle: "Hotel \"SUGDDELUXE\"",
+        cmdFreeRooms: "Available rooms", cmdMyBookings: "My bookings", cmdAboutHotel: "About hotel",
+        cmdPrices: "Prices", cmdServices: "Services", cmdAttractions: "Attractions",
+        cmdRestaurants: "Nearby restaurants", cmdHowToGet: "How to get", cmdContact: "Contact",
+        footerText: "© 2024 SUGDDELUXE. All rights reserved.",
+        footerAddress: "Khujand, Rahim Jalil str., 24 | +992 (88) 999-30-90"
+    }
+};
+
+let currentLang = 'tj';
+
+function getLangFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const langParam = urlParams.get('lang');
+    if (langParam && (langParam === 'tj' || langParam === 'ru' || langParam === 'en')) return langParam;
+    return null;
+}
+
+function updateURLLang(lang) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', lang);
+    return url.toString();
+}
+
+function switchLanguage(lang) {
+    if (lang === currentLang) return;
+    localStorage.setItem('site_lang', lang);
+    currentLang = lang;
+    window.location.href = updateURLLang(lang);
+}
+
+function applyUITranslations() {
+    const t = translations[currentLang];
+    if (!t) return;
+    
+    document.getElementById('navHome') && (document.getElementById('navHome').innerText = t.navHome);
+    document.getElementById('navRooms') && (document.getElementById('navRooms').innerText = t.navRooms);
+    document.getElementById('navAbout') && (document.getElementById('navAbout').innerText = t.navAbout);
+    document.getElementById('navAdmin') && (document.getElementById('navAdmin').innerText = t.navAdmin);
+    document.getElementById('navLogo') && (document.getElementById('navLogo').innerText = t.navLogo);
+    
+    document.getElementById('sideMenuTitle') && (document.getElementById('sideMenuTitle').innerHTML = t.sideMenuTitle);
+    document.getElementById('sideMenuSubtitle') && (document.getElementById('sideMenuSubtitle').innerText = t.sideMenuSubtitle);
+    document.getElementById('sideHome') && document.getElementById('sideHome') && (document.getElementById('sideHome').querySelector('.menu-label').innerText = t.sideHome);
+    document.getElementById('sideRooms') && document.getElementById('sideRooms') && (document.getElementById('sideRooms').querySelector('.menu-label').innerText = t.sideRooms);
+    document.getElementById('sideAbout') && document.getElementById('sideAbout') && (document.getElementById('sideAbout').querySelector('.menu-label').innerText = t.sideAbout);
+    document.getElementById('sideAdmin') && document.getElementById('sideAdmin') && (document.getElementById('sideAdmin').querySelector('.menu-label').innerText = t.sideAdmin);
+    document.getElementById('sideChatLabel') && (document.getElementById('sideChatLabel').innerText = t.sideChat);
+    
+    document.getElementById('welcomeMessage') && (document.getElementById('welcomeMessage').innerText = t.welcomeMessage);
+    document.getElementById('desktopWelcomeMessage') && (document.getElementById('desktopWelcomeMessage').innerText = t.welcomeMessage);
+    document.getElementById('commandsBtnText') && (document.getElementById('commandsBtnText').innerText = t.commandsBtn);
+    document.getElementById('desktopCommandsBtnText') && (document.getElementById('desktopCommandsBtnText').innerText = t.commandsBtn);
+    document.getElementById('typingText') && (document.getElementById('typingText').innerText = t.typingText);
+    document.getElementById('desktopTypingText') && (document.getElementById('desktopTypingText').innerText = t.typingText);
+    document.getElementById('mobileChatInput') && (document.getElementById('mobileChatInput').placeholder = t.chatPlaceholder);
+    document.getElementById('chatInput') && (document.getElementById('chatInput').placeholder = t.chatPlaceholder);
+    document.getElementById('mobileChatTitle') && (document.getElementById('mobileChatTitle').innerHTML = `<i class="fas fa-robot"></i> ${t.chatTitle}`);
+    document.getElementById('desktopChatTitle') && (document.getElementById('desktopChatTitle').innerText = t.chatTitle);
+    document.getElementById('desktopChatSubtitle') && (document.getElementById('desktopChatSubtitle').innerText = t.chatSubtitle);
+    
+    document.getElementById('footerText') && (document.getElementById('footerText').innerText = t.footerText);
+    document.getElementById('footerAddress') && (document.getElementById('footerAddress').innerText = t.footerAddress);
+    
+    updateCommandsButtons();
+}
+
+function updateCommandsButtons() {
+    const t = translations[currentLang];
+    const commands = [
+        { id: 'free_rooms', text: t.cmdFreeRooms, actionKey: 'free_rooms' },
+        { id: 'my_bookings', text: t.cmdMyBookings, actionKey: 'my_bookings' },
+        { id: 'about_hotel', text: t.cmdAboutHotel, actionKey: 'about_hotel' },
+        { id: 'prices', text: t.cmdPrices, actionKey: 'prices' },
+        { id: 'services', text: t.cmdServices, actionKey: 'services' },
+        { id: 'attractions', text: t.cmdAttractions, actionKey: 'attractions' },
+        { id: 'restaurants', text: t.cmdRestaurants, actionKey: 'restaurants' },
+        { id: 'how_to_get', text: t.cmdHowToGet, actionKey: 'how_to_get' },
+        { id: 'contact', text: t.cmdContact, actionKey: 'contact' }
+    ];
+    
+    const texts = {
+        tj: { free_rooms: "Ҳуҷраҳои озод", my_bookings: "Фармоишҳои ман", about_hotel: "Дар бораи меҳмонхона", prices: "Нархҳо", services: "Хизматрасонӣ", attractions: "Ҷойҳои тамошобоб", restaurants: "Ошхонаҳои наздик", how_to_get: "Чи тавр расидан", contact: "Тамос" },
+        ru: { free_rooms: "Свободные номера", my_bookings: "Мои брони", about_hotel: "Об отеле", prices: "Цены", services: "Услуги", attractions: "Достопримечательности", restaurants: "Рестораны рядом", how_to_get: "Как добраться", contact: "Контакты" },
+        en: { free_rooms: "Available rooms", my_bookings: "My bookings", about_hotel: "About hotel", prices: "Prices", services: "Services", attractions: "Attractions", restaurants: "Nearby restaurants", how_to_get: "How to get", contact: "Contact" }
+    };
+    
+    const cmdTexts = texts[currentLang];
+    
+    const mobileGrid = document.getElementById('mobileCommandsGrid');
+    const desktopGrid = document.getElementById('desktopCommandsGrid');
+    
+    if (mobileGrid) {
+        mobileGrid.innerHTML = commands.map(cmd => 
+            `<button class="cmd-btn" onclick="sendMobileCommand('${cmdTexts[cmd.actionKey]}')"><i class="fas fa-${getCommandIcon(cmd.id)}"></i> ${cmd.text}</button>`
+        ).join('');
+    }
+    
+    if (desktopGrid) {
+        desktopGrid.innerHTML = commands.map(cmd => 
+            `<button class="cmd-btn" onclick="sendDesktopCommand('${cmdTexts[cmd.actionKey]}')"><i class="fas fa-${getCommandIcon(cmd.id)}"></i> ${cmd.text}</button>`
+        ).join('');
+    }
+}
+
+function getCommandIcon(cmdId) {
+    const icons = {
+        free_rooms: 'bed', my_bookings: 'calendar-check', about_hotel: 'info-circle',
+        prices: 'tags', services: 'concierge-bell', attractions: 'landmark',
+        restaurants: 'utensils', how_to_get: 'map-marker-alt', contact: 'phone'
+    };
+    return icons[cmdId] || 'comment';
+}
+
+// ========== УПРАВЛЕНИЕ МЕНЮ ==========
+function openMenu() {
+    document.getElementById('sideMenu').classList.add('open');
+    document.getElementById('menuOverlay').classList.add('open');
+    document.getElementById('hamburgerBtn').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+    document.getElementById('sideMenu').classList.remove('open');
+    document.getElementById('menuOverlay').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('open');
+    document.body.style.overflow = '';
+}
+
+function toggleMenu() {
+    if (document.getElementById('sideMenu').classList.contains('open')) closeMenu();
+    else openMenu();
+}
+
+document.getElementById('hamburgerBtn')?.addEventListener('click', toggleMenu);
+document.getElementById('menuOverlay')?.addEventListener('click', closeMenu);
+
+// ========== УПРАВЛЕНИЕ КОМАНДАМИ ==========
+function toggleMobileCommands() {
+    const dropdown = document.getElementById('mobileCommandsDropdown');
+    if (dropdown) dropdown.classList.toggle('show');
+}
+
+function toggleDesktopCommands() {
+    const dropdown = document.getElementById('desktopCommandsDropdown');
+    if (dropdown) dropdown.classList.toggle('show');
+}
+
+function sendMobileCommand(command) {
+    const input = document.getElementById('mobileChatInput');
+    if (input) {
+        input.value = command;
+        sendMobileMessage();
+    }
+    document.getElementById('mobileCommandsDropdown')?.classList.remove('show');
+}
+
+function sendDesktopCommand(command) {
+    const input = document.getElementById('chatInput');
+    if (input) {
+        input.value = command;
+        if (window.smartAIAssistant) window.smartAIAssistant.sendMessage();
+    }
+    document.getElementById('desktopCommandsDropdown')?.classList.remove('show');
+}
+
+// ========== ГОЛОСОВОЙ ВВОД ==========
+async function startVoiceInput(type) {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        const msg = type === 'mobile' ? addMobileSystemMessage : (msg) => window.smartAIAssistant?.addSystemMessage(msg);
+        msg('❌ Ваш браузер не поддерживает голосовой ввод.');
+        return;
+    }
+    
+    try {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        if (currentLang === 'ru') recognition.lang = 'ru-RU';
+        else if (currentLang === 'en') recognition.lang = 'en-US';
+        else recognition.lang = 'ru-RU';
+        
+        recognition.interimResults = false;
+        recognition.maxAlternatives = 1;
+        
+        const btn = type === 'mobile' ? document.getElementById('mobileVoiceBtn') : document.getElementById('voiceBtn');
+        if (btn) {
+            btn.classList.add('recording');
+        }
+        
+        recognition.start();
+        
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            if (type === 'mobile') {
+                const input = document.getElementById('mobileChatInput');
+                if (input) input.value = transcript;
+                sendMobileMessage();
+            } else {
+                const input = document.getElementById('chatInput');
+                if (input) input.value = transcript;
+                if (window.smartAIAssistant) window.smartAIAssistant.sendMessage();
+            }
+            if (btn) btn.classList.remove('recording');
+        };
+        
+        recognition.onerror = (event) => {
+            let errorMsg = '';
+            if (event.error === 'not-allowed') errorMsg = '❌ Нет доступа к микрофону. Разрешите доступ в настройках.';
+            else if (event.error === 'no-speech') errorMsg = '❌ Речь не обнаружена. Попробуйте ещё раз.';
+            else errorMsg = '❌ Не удалось распознать голос.';
+            
+            const msg = type === 'mobile' ? addMobileSystemMessage : (msg) => window.smartAIAssistant?.addSystemMessage(msg);
+            msg(errorMsg);
+            if (btn) btn.classList.remove('recording');
+        };
+        
+        recognition.onend = () => {
+            if (btn) btn.classList.remove('recording');
+        };
+        
+    } catch (error) {
+        const msg = type === 'mobile' ? addMobileSystemMessage : (msg) => window.smartAIAssistant?.addSystemMessage(msg);
+        msg('❌ Ошибка доступа к микрофону.');
+    }
+}
+
+// ========== МОБИЛЬНЫЙ ЧАТ ==========
+function openMobileChat() {
+    const chatPage = document.getElementById('mobileChatPage');
+    if (chatPage) chatPage.classList.add('active');
+    const input = document.getElementById('mobileChatInput');
+    if (input) setTimeout(() => input.focus(), 300);
+    if (!window.smartAIAssistant) window.smartAIAssistant = new SmartAIAssistant();
+    window.smartAIAssistant.onChatOpen();
+}
+
+function closeMobileChat() {
+    document.getElementById('mobileChatPage')?.classList.remove('active');
+}
+
+function sendMobileMessage() {
+    const input = document.getElementById('mobileChatInput');
+    const messageText = input?.value.trim();
+    if (!messageText) return;
+    input.value = '';
+    if (window.smartAIAssistant) {
+        window.smartAIAssistant.sendMobileMessage(messageText);
+    } else {
+        addMobileSystemMessage('❌ Системаи AI омода нест.');
+    }
+}
+
+function addMobileMessage(content, sender) {
+    const container = document.getElementById('mobileChatMessages');
+    if (!container) return;
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = sender === 'user' ? 'message-user' : 'message-ai';
+    if (sender === 'user') {
+        const userLabel = currentLang === 'ru' ? 'Вы' : (currentLang === 'en' ? 'You' : 'Шумо');
+        messageDiv.innerHTML = `<strong>${userLabel}:</strong> ${formatMessage(content)}`;
+    } else {
+        messageDiv.innerHTML = `<strong>AI:</strong> ${formatMessage(content)}`;
+    }
+    container.appendChild(messageDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+function addMobileSystemMessage(content) {
+    const container = document.getElementById('mobileChatMessages');
+    if (!container) return;
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'message-system';
+    messageDiv.innerHTML = formatMessage(content);
+    container.appendChild(messageDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+function addMobileBookingCancelButton(bookingId, roomNumber, checkIn, checkOut) {
+    const container = document.getElementById('mobileChatMessages');
+    if (!container) return;
+    
+    const bookingDiv = document.createElement('div');
+    bookingDiv.className = 'booking-item';
+    bookingDiv.innerHTML = `
+        <div style="font-weight: bold;">🏨 Ҳуҷраи ${roomNumber}</div>
+        <div style="font-size: 12px; color: #666;">📅 ${checkIn} - ${checkOut}</div>
+        <button class="cancel-booking-btn" onclick="cancelThisBooking(${bookingId})">
+            ❌ Бекор кардан
+        </button>
+    `;
+    container.appendChild(bookingDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+function cancelThisBooking(bookingId) {
+    if (confirm('Шумо мутмаин ҳастед, ки мехоҳед ин бронро бекор кунед?')) {
+        if (window.smartAIAssistant) {
+            window.smartAIAssistant.cancelBooking(bookingId);
+        }
+    }
+}
+
+function showMobileTypingIndicator(show) {
+    const indicator = document.getElementById('mobileTypingIndicator');
+    if (indicator) indicator.style.display = show ? 'block' : 'none';
+}
+
+function formatMessage(content) {
+    return content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+}
+
+// ========== SMART AI ASSISTANT ==========
+class SmartAIAssistant {
+    constructor() {
+        this.websocket = null;
+        this.isConnected = false;
+        this.userEmail = localStorage.getItem('hotel_chat_email') || null;
+        this.isMobile = window.innerWidth <= 768;
+        this.isInitialized = false;
+        this.init();
+    }
+
+    init() {
+        if (this.isInitialized) return;
+        console.log('🔄 Инициализация AI ассистента, язык:', currentLang);
+        this.isInitialized = true;
+        this.bindEvents();
+        this.connectWebSocket();
+    }
+
+    onChatOpen() {
+        if (!localStorage.getItem('chat_welcomed')) {
+            this.addSystemMessage(translations[currentLang]?.welcomeMessage || 'Салом!');
+            localStorage.setItem('chat_welcomed', 'true');
+        }
+        this.askForEmail();
+    }
+
+    askForEmail() {
+        if (!this.userEmail) {
+            setTimeout(() => {
+                const msg = currentLang === 'ru' ? 'Пожалуйста, укажите ваш email для доступа к бронированиям:' : 
+                           (currentLang === 'en' ? 'Please provide your email to access bookings:' : 
+                           'Лутфан, email-и худро барои дастрасӣ ба фармоишҳо муайян кунед:');
+                this.addSystemMessage(msg);
+                this.showEmailInput();
+            }, 500);
+        }
+    }
+
+    showEmailInput() {
+        const container = this.getMessagesContainer();
+        if (!container || document.getElementById('chatEmailInput')) return;
+        const emailDiv = document.createElement('div');
+        emailDiv.className = 'email-form-container';
+        emailDiv.innerHTML = `
+            <input type="email" id="chatEmailInput" class="email-input" placeholder="your@email.com">
+            <button onclick="window.smartAIAssistant.saveEmail()" class="email-submit-btn">
+                ${currentLang === 'ru' ? '✅ Сохранить email' : (currentLang === 'en' ? '✅ Save email' : '✅ Захира кардани email')}
+            </button>
+        `;
+        container.appendChild(emailDiv);
+        container.scrollTop = container.scrollHeight;
+        setTimeout(() => document.getElementById('chatEmailInput')?.focus(), 100);
+    }
+
+    saveEmail() {
+        const emailInput = document.getElementById('chatEmailInput');
+        if (emailInput && emailInput.value) {
+            const email = emailInput.value.trim();
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                this.userEmail = email;
+                localStorage.setItem('hotel_chat_email', this.userEmail);
+                const msg = currentLang === 'ru' ? `✅ Email сохранен: ${email}` : 
+                           (currentLang === 'en' ? `✅ Email saved: ${email}` : `✅ Email захира шуд: ${email}`);
+                this.addSystemMessage(msg);
+                emailInput.parentElement?.remove();
+            } else {
+                const msg = currentLang === 'ru' ? '❌ Введите корректный email' : 
+                           (currentLang === 'en' ? '❌ Enter a valid email' : '❌ Лутфан email-и дурустро ворид кунед');
+                this.addSystemMessage(msg);
+                emailInput.focus();
+            }
+        }
+    }
+
+    getMessagesContainer() {
+        if (this.isMobile && document.getElementById('mobileChatPage')?.classList.contains('active')) {
+            return document.getElementById('mobileChatMessages');
+        }
+        return document.getElementById('chatMessages');
+    }
+
+    bindEvents() {
+        document.getElementById('chatToggle')?.addEventListener('click', () => { this.toggleChat(); this.onChatOpen(); });
+        document.getElementById('closeChat')?.addEventListener('click', () => this.closeChat());
+        document.getElementById('sendMessage')?.addEventListener('click', () => this.sendMessage());
+        document.getElementById('chatInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') this.sendMessage(); });
+        document.getElementById('voiceBtn')?.addEventListener('click', () => startVoiceInput('desktop'));
+    }
+
+    connectWebSocket() {
+        try {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = `${protocol}//${window.location.host}/ws/chat`;
+            this.websocket = new WebSocket(wsUrl);
+            this.websocket.onopen = () => { this.isConnected = true; console.log('✅ WebSocket connected'); };
+            this.websocket.onmessage = (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    this.handleWebSocketMessage(data);
+                } catch (error) { console.error('Parse error:', error); }
+            };
+            this.websocket.onclose = () => {
+                this.isConnected = false;
+                setTimeout(() => this.connectWebSocket(), 3000);
+            };
+        } catch (error) { console.error('WebSocket error:', error); }
+    }
+
+    handleWebSocketMessage(data) {
+        switch (data.type) {
+            case 'typing': this.showTypingIndicator(data.status); break;
+            case 'response':
+                this.showTypingIndicator(false);
+                this.addMessage(data.message, 'ai');
+                if (data.action === 'show_cancel_buttons' && data.bookings) {
+                    this.showCancelButtons(data.bookings);
+                } else if (data.action === 'show_rooms') {
+                    this.addActionButton(
+                        currentLang === 'ru' ? 'Посмотреть номера' : (currentLang === 'en' ? 'View rooms' : 'Ҳуҷраҳоро бубинед'),
+                        () => { 
+                            const url = new URL('/rooms', window.location.origin);
+                            url.searchParams.set('lang', currentLang);
+                            window.location.href = url.toString();
+                        }
+                    );
+                }
+                break;
+            case 'redirect':
+                this.addMessage(data.message, 'ai');
+                setTimeout(() => { 
+                    const url = new URL(data.url, window.location.origin);
+                    url.searchParams.set('lang', currentLang);
+                    window.location.href = url.toString();
+                }, 2000);
+                break;
+        }
+    }
+
+    showCancelButtons(bookings) {
+        const container = this.getMessagesContainer();
+        if (!container || !bookings || bookings.length === 0) return;
+        
+        bookings.forEach(booking => {
+            const bookingDiv = document.createElement('div');
+            bookingDiv.className = 'booking-item';
+            bookingDiv.innerHTML = `
+                <div style="font-weight: bold;">🏨 ${currentLang === 'ru' ? 'Номер' : (currentLang === 'en' ? 'Room' : 'Ҳуҷра')} ${booking.room_number} (${booking.room_type})</div>
+                <div style="font-size: 12px; color: #666;">📅 ${booking.check_in} - ${booking.check_out}</div>
+                <button class="cancel-booking-btn" onclick="window.smartAIAssistant.cancelBooking(${booking.id})">
+                    ❌ ${currentLang === 'ru' ? 'Отменить' : (currentLang === 'en' ? 'Cancel' : 'Бекор кардан')}
+                </button>
+            `;
+            container.appendChild(bookingDiv);
+        });
+        container.scrollTop = container.scrollHeight;
+    }
+
+    async cancelBooking(bookingId) {
+        if (!this.userEmail) {
+            this.addSystemMessage(currentLang === 'ru' ? '❌ Сначала укажите ваш email' : 
+                                 (currentLang === 'en' ? '❌ Please provide your email first' : 
+                                 '❌ Аввал email-и худро муайян кунед'));
+            this.askForEmail();
+            return;
+        }
+        
+        this.addSystemMessage(currentLang === 'ru' ? `🔄 Отмена бронирования #${bookingId}...` : 
+                             (currentLang === 'en' ? `🔄 Cancelling booking #${bookingId}...` : 
+                             `🔄 Брони #${bookingId} бекор карда мешавад...`));
+        
+        try {
+            const formData = new FormData();
+            formData.append('booking_id', bookingId);
+            formData.append('email', this.userEmail);
+            formData.append('lang', currentLang);
+            
+            const response = await fetch('/api/cancel-booking', { method: 'POST', body: formData });
+            const result = await response.json();
+            
+            if (result.status === 'success') {
+                this.addSystemMessage(`✅ ${result.message}`);
+                setTimeout(() => this.sendMessage(currentLang === 'ru' ? 'Мои брони' : (currentLang === 'en' ? 'My bookings' : 'Фармоишҳои ман')), 1500);
+            } else {
+                this.addSystemMessage(`❌ ${result.detail || 'Ошибка при отмене'}`);
+            }
+        } catch (error) {
+            this.addSystemMessage('❌ Ошибка при отмене бронирования');
+        }
+    }
+
+    showTypingIndicator(show) {
+        if (this.isMobile) {
+            showMobileTypingIndicator(show);
+        } else {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.style.display = show ? 'block' : 'none';
+        }
+    }
+
+    addActionButton(text, onClick) {
+        const container = this.getMessagesContainer();
+        if (!container) return;
+        const btnDiv = document.createElement('div');
+        btnDiv.style.margin = '10px 0';
+        btnDiv.style.textAlign = 'center';
+        btnDiv.innerHTML = `<button onclick="(${onClick.toString()})()" class="action-btn">${text}</button>`;
+        container.appendChild(btnDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    sendMessage(message) {
+        const input = document.getElementById('chatInput');
+        if (message) input.value = message;
+        const msg = input?.value.trim();
+        if (!msg || !this.isConnected) return;
+        this.addMessage(msg, 'user');
+        input.value = '';
+        this.websocket.send(JSON.stringify({ message: msg, email: this.userEmail, language: currentLang }));
+    }
+
+    sendMobileMessage(messageText) {
+        if (!messageText || !this.isConnected) return;
+        addMobileMessage(messageText, 'user');
+        this.websocket.send(JSON.stringify({ message: messageText, email: this.userEmail, language: currentLang }));
+    }
+
+    addMessage(content, sender) {
+        if (this.isMobile && document.getElementById('mobileChatPage')?.classList.contains('active')) {
+            addMobileMessage(content, sender);
+            return;
+        }
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = sender === 'user' ? 'message-user' : 'message-ai';
+        messageDiv.style.maxWidth = '85%';
+        
+        if (sender === 'user') {
+            const userLabel = currentLang === 'ru' ? 'Вы' : (currentLang === 'en' ? 'You' : 'Шумо');
+            messageDiv.innerHTML = `<strong>${userLabel}:</strong> ${formatMessage(content)}`;
+        } else {
+            messageDiv.innerHTML = `<strong>AI:</strong> ${formatMessage(content)}`;
+        }
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    addSystemMessage(content) {
+        if (this.isMobile && document.getElementById('mobileChatPage')?.classList.contains('active')) {
+            addMobileSystemMessage(content);
+            return;
+        }
+        const container = document.getElementById('chatMessages');
+        if (!container) return;
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.style.margin = '10px auto';
+        messageDiv.style.padding = '8px 12px';
+        messageDiv.style.background = '#fff3cd';
+        messageDiv.style.color = '#856404';
+        messageDiv.style.borderRadius = '10px';
+        messageDiv.style.textAlign = 'center';
+        messageDiv.style.fontSize = '12px';
+        messageDiv.style.maxWidth = '90%';
+        messageDiv.innerHTML = formatMessage(content);
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    toggleChat() {
+        const chatWindow = document.getElementById('chatWindow');
+        if (chatWindow) {
+            const isVisible = chatWindow.style.display === 'flex';
+            chatWindow.style.display = isVisible ? 'none' : 'flex';
+            if (!isVisible) document.getElementById('chatInput')?.focus();
+        }
+    }
+
+    closeChat() {
+        const chatWindow = document.getElementById('chatWindow');
+        if (chatWindow) chatWindow.style.display = 'none';
+    }
+}
+
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
+document.addEventListener('DOMContentLoaded', function() {
+    const urlLang = getLangFromURL();
+    const savedLang = localStorage.getItem('site_lang');
+    
+    if (urlLang) {
+        currentLang = urlLang;
+        localStorage.setItem('site_lang', currentLang);
+    } else if (savedLang && (savedLang === 'tj' || savedLang === 'ru' || savedLang === 'en')) {
+        currentLang = savedLang;
+        const newUrl = updateURLLang(currentLang);
+        if (newUrl !== window.location.href) {
+            window.location.href = newUrl;
+            return;
+        }
+    } else {
+        currentLang = 'tj';
+        localStorage.setItem('site_lang', currentLang);
+        const newUrl = updateURLLang(currentLang);
+        if (newUrl !== window.location.href) {
+            window.location.href = newUrl;
+            return;
+        }
+    }
+    
+    console.log('🌍 Определён язык:', currentLang);
+    applyUITranslations();
+    window.smartAIAssistant = new SmartAIAssistant();
+    console.log('🚀 AI ассистент инициализирован, язык:', currentLang);
+});
+
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (link && link.href && !link.href.startsWith('#') && !link.href.startsWith('javascript:')) {
+        const url = new URL(link.href, window.location.origin);
+        if (url.origin === window.location.origin) {
+            if (!url.searchParams.has('lang')) {
+                url.searchParams.set('lang', currentLang);
+                link.href = url.toString();
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>

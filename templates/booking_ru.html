@@ -1,0 +1,980 @@
+{% extends "base.html" %}
+
+{% set room_types = {
+    'Стандарт': 'Стандарт',
+    'Боҳашамат': 'Люкс',
+    'Оилавӣ': 'Семейный',
+    'Олӣ': 'Премиум'
+} %}
+
+{% block content %}
+<div class="booking-container-fullscreen">
+    <!-- Полноэкранная форма бронирования -->
+    <section class="booking-fullscreen">
+        <div class="fullscreen-background">
+            <div class="background-overlay"></div>
+        </div>
+        
+        <div class="fullscreen-content">
+            <!-- Левая часть - форма -->
+            <div class="form-section-fullscreen">
+                <div class="form-header-fullscreen">
+                    <h1 class="main-title-fullscreen">
+                        Бронирование <span class="highlight-fullscreen">номера</span>
+                    </h1>
+                    <p class="subtitle-fullscreen">
+                        Забронируйте номер {{ room.number }} - {{ room_types[room.type] }} и наслаждайтесь комфортом
+                    </p>
+                    
+                    <div class="features-grid-fullscreen">
+                        <div class="feature-item-fullscreen">
+                            <span class="feature-icon-fullscreen">⭐</span>
+                            <span>Мгновенное подтверждение</span>
+                        </div>
+                        <div class="feature-item-fullscreen">
+                            <span class="feature-icon-fullscreen">🔒</span>
+                            <span>Безопасная оплата</span>
+                        </div>
+                        <div class="feature-item-fullscreen">
+                            <span class="feature-icon-fullscreen">🆓</span>
+                            <span>Бесплатная отмена</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Шаги процесса -->
+                <div class="steps-fullscreen">
+                    <div class="step-fullscreen active">
+                        <div class="step-number-fullscreen">1</div>
+                        <div class="step-label-fullscreen">Информация о госте</div>
+                    </div>
+                    <div class="step-fullscreen">
+                        <div class="step-number-fullscreen">2</div>
+                        <div class="step-label-fullscreen">Подтверждение</div>
+                    </div>
+                    <div class="step-fullscreen">
+                        <div class="step-number-fullscreen">3</div>
+                        <div class="step-label-fullscreen">Готово!</div>
+                    </div>
+                    <div class="step-progress-fullscreen">
+                        <div class="progress-bar-fullscreen"></div>
+                    </div>
+                </div>
+
+                <!-- Форма -->
+                <form method="post" action="/book" class="booking-form-fullscreen" id="bookingForm">
+                    <input type="hidden" name="room_id" value="{{ room.id }}">
+                    <input type="hidden" name="lang" value="{{ current_lang }}">
+
+                    <div class="form-grid-fullscreen">
+                        <!-- Имя -->
+                        <div class="form-group-fullscreen">
+                            <label class="form-label-fullscreen">
+                                <span class="label-icon-fullscreen">👤</span>
+                                Полное имя гостя
+                            </label>
+                            <input type="text" name="guest_name" required 
+                                   placeholder="Иванов Иван Иванович"
+                                   class="form-input-fullscreen">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group-fullscreen">
+                            <label class="form-label-fullscreen">
+                                <span class="label-icon-fullscreen">📧</span>
+                                Адрес email
+                            </label>
+                            <input type="email" name="guest_email" required 
+                                   placeholder="ivanov@example.com"
+                                   class="form-input-fullscreen">
+                        </div>
+
+                        <!-- Телефон -->
+                        <div class="form-group-fullscreen">
+                            <label class="form-label-fullscreen">
+                                <span class="label-icon-fullscreen">📞</span>
+                                Номер телефона
+                            </label>
+                            <input type="tel" name="guest_phone" required 
+                                   placeholder="+7 (999) 999-99-99"
+                                   class="form-input-fullscreen">
+                        </div>
+
+                        <!-- Дата заезда -->
+                        <div class="form-group-fullscreen">
+                            <label class="form-label-fullscreen">
+                                <span class="label-icon-fullscreen">📅</span>
+                                Дата заезда
+                            </label>
+                            <input type="date" name="check_in" id="checkinDate" required 
+                                   class="form-input-fullscreen date-input">
+                        </div>
+
+                        <!-- Дата выезда -->
+                        <div class="form-group-fullscreen">
+                            <label class="form-label-fullscreen">
+                                <span class="label-icon-fullscreen">📅</span>
+                                Дата выезда
+                            </label>
+                            <input type="date" name="check_out" id="checkoutDate" required 
+                                   class="form-input-fullscreen date-input">
+                        </div>
+
+                        <!-- Комментарий -->
+                        <div class="form-group-fullscreen full-width">
+                            <label class="form-label-fullscreen">
+                                <span class="label-icon-fullscreen">💬</span>
+                                Особые пожелания (необязательно)
+                            </label>
+                            <textarea name="special_requests" 
+                                      placeholder="Укажите ваши особые пожелания..."
+                                      class="form-input-fullscreen textarea-fullscreen"
+                                      rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Сводка -->
+                    <div class="summary-fullscreen">
+                        <h3 class="summary-title-fullscreen">📋 Итог заказа</h3>
+                        <div class="summary-content-fullscreen">
+                            <div class="summary-item-fullscreen">
+                                <span>Номер:</span>
+                                <strong>{{ room.number }} - {{ room_types[room.type] }}</strong>
+                            </div>
+                            <div class="summary-item-fullscreen">
+                                <span>Цена за ночь:</span>
+                                <strong>{{ room.price }} сом.</strong>
+                            </div>
+                            <div class="summary-item-fullscreen">
+                                <span>Количество ночей:</span>
+                                <strong id="nightsCount">0</strong>
+                            </div>
+                            <div class="summary-item-fullscreen total">
+                                <span>Общая стоимость:</span>
+                                <strong id="totalPrice">0 сом.</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки -->
+                    <div class="actions-fullscreen">
+                        <button type="submit" class="submit-btn-fullscreen" id="bookButton">
+                            <span class="btn-text-fullscreen">Забронировать номер</span>
+                            <span class="btn-icon-fullscreen">✨</span>
+                        </button>
+                        <a href="/rooms" class="back-btn-fullscreen">
+                            ← Вернуться к номерам
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Правая часть - информация о номере -->
+            <div class="room-info-fullscreen">
+                <div class="room-card-fullscreen">
+                    <div class="room-image-fullscreen">
+                        <img src="{{ room.image_url }}" alt="Номер {{ room.number }}" 
+                             onerror="this.src='/static/images/room-default.jpg'">
+                        <div class="room-overlay-fullscreen">
+                            <div class="room-price-fullscreen">{{ room.price }} сом./ночь</div>
+                            <div class="room-meta-fullscreen">
+                                <span>👥 {{ room.capacity }} гостя</span>
+                                <span>📏 30 м²</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="room-details-fullscreen">
+                        <h3 class="room-title-fullscreen">🎯 О номере</h3>
+                        
+                        <div class="details-grid-fullscreen">
+                            <div class="detail-item-fullscreen">
+                                <span class="detail-icon-fullscreen">🏷️</span>
+                                <div class="detail-text-fullscreen">
+                                    <strong>Тип</strong>
+                                    <span>{{ room_types[room.type] }}</span>
+                                </div>
+                            </div>
+                            <div class="detail-item-fullscreen">
+                                <span class="detail-icon-fullscreen">👥</span>
+                                <div class="detail-text-fullscreen">
+                                    <strong>Вместимость</strong>
+                                    <span>{{ room.capacity }} гостя</span>
+                                </div>
+                            </div>
+                            <div class="detail-item-fullscreen">
+                                <span class="detail-icon-fullscreen">💰</span>
+                                <div class="detail-text-fullscreen">
+                                    <strong>Цена за ночь</strong>
+                                    <span class="price-highlight">{{ room.price }} сом.</span>
+                                </div>
+                            </div>
+                            <div class="detail-item-fullscreen">
+                                <span class="detail-icon-fullscreen">📏</span>
+                                <div class="detail-text-fullscreen">
+                                    <strong>Площадь</strong>
+                                    <span>30 м²</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="description-fullscreen">
+                            <h4>Описание</h4>
+                            <p>{% set desc = room.description_ru or room.description %}
+                               {% if desc %}
+                                   {{ desc }}
+                               {% else %}
+                                   {% if room.type == 'Стандарт' %}
+                                       Уютный стандартный номер с современной мебелью
+                                   {% elif room.type == 'Люкс' %}
+                                       Роскошный люкс с гостиной зоной
+                                   {% elif room.type == 'Семейный' %}
+                                       Семейный номер для комфортного отдыха
+                                   {% else %}
+                                       Комфортабельный номер с современным ремонтом
+                                   {% endif %}
+                               {% endif %}
+                            </p>
+                        </div>
+
+                        <div class="amenities-fullscreen">
+                            <h4>Удобства</h4>
+                            <div class="amenities-grid-fullscreen">
+                                <div class="amenity-fullscreen">
+                                    <span class="amenity-icon-fullscreen">🛏️</span>
+                                    <span>Удобная кровать</span>
+                                </div>
+                                <div class="amenity-fullscreen">
+                                    <span class="amenity-icon-fullscreen">🚿</span>
+                                    <span>Собственная ванная</span>
+                                </div>
+                                <div class="amenity-fullscreen">
+                                    <span class="amenity-icon-fullscreen">📺</span>
+                                    <span>Телевизор</span>
+                                </div>
+                                <div class="amenity-fullscreen">
+                                    <span class="amenity-icon-fullscreen">❄️</span>
+                                    <span>Кондиционер</span>
+                                </div>
+                                <div class="amenity-fullscreen">
+                                    <span class="amenity-icon-fullscreen">📶</span>
+                                    <span>Wi-Fi</span>
+                                </div>
+                                <div class="amenity-fullscreen">
+                                    <span class="amenity-icon-fullscreen">☕</span>
+                                    <span>Чай/кофе</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+/* Все стили остаются без изменений */
+.booking-container-fullscreen {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.booking-fullscreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.fullscreen-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.fullscreen-content {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 2rem;
+    gap: 3rem;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+}
+
+.form-section-fullscreen {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 3rem;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.form-header-fullscreen {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.main-title-fullscreen {
+    font-size: 3.5rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.highlight-fullscreen {
+    color: #3498db;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle-fullscreen {
+    font-size: 1.4rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.features-grid-fullscreen {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.feature-item-fullscreen {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.feature-icon-fullscreen {
+    font-size: 1.4rem;
+}
+
+.steps-fullscreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    margin: 3rem 0;
+    position: relative;
+}
+
+.step-fullscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+}
+
+.step-number-fullscreen {
+    width: 60px;
+    height: 60px;
+    background: #e9ecef;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    border: 4px solid transparent;
+}
+
+.step-fullscreen.active .step-number-fullscreen {
+    background: #3498db;
+    color: white;
+    border-color: #2980b9;
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+    transform: scale(1.1);
+}
+
+.step-label-fullscreen {
+    font-weight: 600;
+    color: #666;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.step-fullscreen.active .step-label-fullscreen {
+    color: #3498db;
+    font-weight: 700;
+}
+
+.step-progress-fullscreen {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: #e9ecef;
+    z-index: 1;
+}
+
+.progress-bar-fullscreen {
+    height: 100%;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.booking-form-fullscreen {
+    width: 100%;
+}
+
+.form-grid-fullscreen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-group-fullscreen {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-fullscreen.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-label-fullscreen {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.label-icon-fullscreen {
+    font-size: 1.3rem;
+    min-width: 30px;
+}
+
+.form-input-fullscreen {
+    width: 100%;
+    padding: 1.3rem 1.5rem;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    font-family: inherit;
+}
+
+.form-input-fullscreen:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 8px 25px rgba(52, 152, 219, 0.2);
+    transform: translateY(-2px);
+}
+
+.textarea-fullscreen {
+    resize: vertical;
+    min-height: 120px;
+    font-family: inherit;
+    line-height: 1.5;
+}
+
+.summary-fullscreen {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2.5rem 0;
+    border-left: 5px solid #3498db;
+}
+
+.summary-title-fullscreen {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+.summary-content-fullscreen {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.summary-item-fullscreen {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 1.2rem;
+}
+
+.summary-item-fullscreen.total {
+    border-bottom: none;
+    border-top: 3px solid #3498db;
+    padding-top: 1.5rem;
+    margin-top: 1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.summary-item-fullscreen.total strong {
+    color: #e74c3c;
+    font-size: 1.5rem;
+}
+
+.actions-fullscreen {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.submit-btn-fullscreen {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    color: white;
+    border: none;
+    padding: 1.5rem 4rem;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 15px 35px rgba(39, 174, 96, 0.3);
+    min-width: 300px;
+    justify-content: center;
+}
+
+.submit-btn-fullscreen:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(39, 174, 96, 0.4);
+}
+
+.btn-text-fullscreen {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-icon-fullscreen {
+    position: relative;
+    z-index: 2;
+    animation: bounce 2s infinite;
+}
+
+.back-btn-fullscreen {
+    color: #666;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+}
+
+.back-btn-fullscreen:hover {
+    color: #3498db;
+    background: #f8f9fa;
+}
+
+.room-info-fullscreen {
+    position: sticky;
+    top: 2rem;
+}
+
+.room-card-fullscreen {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+}
+
+.room-image-fullscreen {
+    position: relative;
+    height: 300px;
+    overflow: hidden;
+}
+
+.room-image-fullscreen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.room-overlay-fullscreen {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: white;
+    padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.room-price-fullscreen {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.room-meta-fullscreen {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.room-details-fullscreen {
+    padding: 2.5rem;
+}
+
+.room-title-fullscreen {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.details-grid-fullscreen {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.detail-item-fullscreen {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid #f8f9fa;
+}
+
+.detail-icon-fullscreen {
+    font-size: 1.6rem;
+    width: 40px;
+    text-align: center;
+}
+
+.detail-text-fullscreen strong {
+    display: block;
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.detail-text-fullscreen span {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.price-highlight {
+    color: #e74c3c !important;
+    font-weight: bold;
+    font-size: 1.2rem !important;
+}
+
+.description-fullscreen {
+    margin-bottom: 2.5rem;
+}
+
+.description-fullscreen h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.description-fullscreen p {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.amenities-fullscreen h4 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.amenities-grid-fullscreen {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.amenity-fullscreen {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.amenity-icon-fullscreen {
+    font-size: 1.3rem;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@media (max-width: 1200px) {
+    .fullscreen-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 1rem;
+    }
+    .room-info-fullscreen { position: static; }
+    .form-section-fullscreen { padding: 2rem; }
+}
+
+@media (max-width: 768px) {
+    .fullscreen-content { padding: 1rem; }
+    .form-section-fullscreen { padding: 1.5rem; }
+    .main-title-fullscreen { font-size: 2.5rem; }
+    .subtitle-fullscreen { font-size: 1.2rem; }
+    .form-grid-fullscreen { grid-template-columns: 1fr; gap: 1.5rem; }
+    .steps-fullscreen { gap: 2rem; }
+    .step-number-fullscreen { width: 50px; height: 50px; font-size: 1.2rem; }
+    .features-grid-fullscreen { flex-direction: column; gap: 1rem; }
+    .amenities-grid-fullscreen { grid-template-columns: 1fr; }
+    .submit-btn-fullscreen { padding: 1.2rem 2rem; font-size: 1.1rem; min-width: auto; width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .main-title-fullscreen { font-size: 2rem; }
+    .form-section-fullscreen { padding: 1rem; }
+    .room-details-fullscreen { padding: 1.5rem; }
+    .form-input-fullscreen { padding: 1rem; font-size: 1rem; }
+}
+
+@media (min-width: 2000px) {
+    .fullscreen-content { max-width: 2000px; }
+    .form-section-fullscreen { padding: 4rem; }
+    .main-title-fullscreen { font-size: 4rem; }
+    .form-input-fullscreen { padding: 1.5rem 2rem; font-size: 1.2rem; }
+}
+</style>
+
+<script>
+// Данные о занятых датах из базы данных
+const occupiedBookings = {{ occupied_dates | tojson }};
+
+// Функция для проверки, занята ли дата
+function isDateOccupied(dateStr) {
+    if (!dateStr) return false;
+    const checkDate = new Date(dateStr);
+    checkDate.setHours(0, 0, 0, 0);
+    
+    for (let booking of occupiedBookings) {
+        const startDate = new Date(booking.check_in);
+        const endDate = new Date(booking.check_out);
+        startDate.setHours(0, 0, 0, 0);
+        endDate.setHours(0, 0, 0, 0);
+        
+        if (checkDate >= startDate && checkDate < endDate) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Получить следующую свободную дату
+function getNextAvailableDate(startDate) {
+    let nextDate = new Date(startDate);
+    nextDate.setHours(0, 0, 0, 0);
+    let counter = 0;
+    
+    while (isDateOccupied(nextDate.toISOString().split('T')[0]) && counter < 365) {
+        nextDate.setDate(nextDate.getDate() + 1);
+        counter++;
+    }
+    return nextDate;
+}
+
+// Расчет стоимости бронирования
+function calculateTotal() {
+    const checkin = document.getElementById('checkinDate');
+    const checkout = document.getElementById('checkoutDate');
+    const pricePerNight = {{ room.price }};
+    
+    if (checkin.value && checkout.value) {
+        const checkinDate = new Date(checkin.value);
+        const checkoutDate = new Date(checkout.value);
+        const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
+        const nights = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        
+        if (nights > 0) {
+            document.getElementById('nightsCount').textContent = nights;
+            document.getElementById('totalPrice').textContent = (nights * pricePerNight) + ' сом.';
+            updateProgress(2);
+        } else {
+            document.getElementById('nightsCount').textContent = '0';
+            document.getElementById('totalPrice').textContent = '0 сом.';
+        }
+    }
+}
+
+// Обновление прогресса
+function updateProgress(step) {
+    const progressBar = document.querySelector('.progress-bar-fullscreen');
+    const steps = document.querySelectorAll('.step-fullscreen');
+    
+    steps.forEach(s => s.classList.remove('active'));
+    
+    for (let i = 0; i < step; i++) {
+        if (steps[i]) {
+            steps[i].classList.add('active');
+        }
+    }
+    
+    const progress = ((step - 1) / (steps.length - 1)) * 100;
+    progressBar.style.width = progress + '%';
+}
+
+// Валидация формы
+function validateForm() {
+    const form = document.getElementById('bookingForm');
+    const inputs = form.querySelectorAll('input[required]');
+    let isValid = true;
+    
+    inputs.forEach(input => {
+        if (!input.value.trim()) {
+            input.style.borderColor = '#e74c3c';
+            isValid = false;
+        } else {
+            input.style.borderColor = '#e9ecef';
+        }
+    });
+    
+    return isValid;
+}
+
+// Инициализация календаря с блокировкой занятых дат
+function initDatePickers() {
+    const checkinInput = document.getElementById('checkinDate');
+    const checkoutInput = document.getElementById('checkoutDate');
+    
+    if (!checkinInput || !checkoutInput) return;
+    
+    // Устанавливаем минимальную дату - сегодня
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Находим первую свободную дату
+    let firstAvailable = getNextAvailableDate(today);
+    checkinInput.min = firstAvailable.toISOString().split('T')[0];
+    
+    // При изменении даты заезда
+    checkinInput.addEventListener('change', function() {
+        const checkinDate = new Date(this.value);
+        
+        // Проверяем, не занята ли выбранная дата
+        if (isDateOccupied(this.value)) {
+            alert('❌ Эта дата занята! Пожалуйста, выберите другую дату.');
+            let nextAvailable = getNextAvailableDate(checkinDate);
+            this.value = nextAvailable.toISOString().split('T')[0];
+        }
+        
+        // Устанавливаем минимальную дату выезда (день после заезда)
+        const minCheckout = new Date(this.value);
+        minCheckout.setDate(minCheckout.getDate() + 1);
+        checkoutInput.min = minCheckout.toISOString().split('T')[0];
+        
+        // Если выезд меньше минимального, сбрасываем
+        if (checkoutInput.value && new Date(checkoutInput.value) < minCheckout) {
+            checkoutInput.value = '';
+        }
+        
+        calculateTotal();
+    });
+    
+    // При изменении даты выезда
+    checkoutInput.addEventListener('change', function() {
+        if (isDateOccupied(this.value)) {
+            alert('❌ Эта дата занята! Пожалуйста, выберите другую дату.');
+            const checkinVal = checkinInput.value;
+            if (checkinVal) {
+                const checkinDate = new Date(checkinVal);
+                let nextAvailable = getNextAvailableDate(checkinDate);
+                nextAvailable.setDate(nextAvailable.getDate() + 1);
+                this.value = nextAvailable.toISOString().split('T')[0];
+            }
+        }
+        calculateTotal();
+    });
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', function() {
+    updateProgress(1);
+    initDatePickers();
+    
+    // Слушатели событий для пересчета стоимости
+    const checkinInput = document.getElementById('checkinDate');
+    const checkoutInput = document.getElementById('checkoutDate');
+    
+    if (checkinInput && checkoutInput) {
+        checkinInput.addEventListener('change', calculateTotal);
+        checkoutInput.addEventListener('change', calculateTotal);
+    }
+    
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        if (!validateForm()) {
+            e.preventDefault();
+            alert('Пожалуйста, заполните все обязательные поля');
+            return;
+        }
+        
+        // Дополнительная проверка: не занята ли выбранная дата заезда
+        const checkinVal = checkinInput?.value;
+        if (checkinVal && isDateOccupied(checkinVal)) {
+            e.preventDefault();
+            alert('❌ Дата заезда занята! Пожалуйста, выберите другую дату.');
+            return;
+        }
+        
+        const btn = document.getElementById('bookButton');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="btn-text-fullscreen">Бронируем...</span><span class="btn-icon-fullscreen">⏳</span>';
+        updateProgress(3);
+    });
+});
+</script>
+{% endblock %}

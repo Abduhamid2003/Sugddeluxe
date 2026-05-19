@@ -1,0 +1,1459 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about-container">
+    <!-- Hero секция -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title" data-aos="fade-up">Меҳмонхонаи <span class="highlight">СУҒДДЕЛЮКС</span></h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">Бароҳатӣ ва фароғатӣ дар қалби шаҳр</p>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Соли таҷриба</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Ҳуҷра</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">10k+</div>
+                    <div class="stat-label">Меҳмонони қаноатманд</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image" data-aos="zoom-in" data-aos-delay="600">
+            <img src="/static/images/hotel-exterior.jpg" alt="Меҳмонхонаи СУГДОТЕЛ" onerror="this.src='/static/images/room-default.jpg'">
+        </div>
+    </section>
+
+    <!-- Наша история -->
+    <section class="story-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Таърихи <span class="highlight">Мо</span></h2>
+            <div class="story-content">
+                <div class="story-text" data-aos="fade-right">
+                    <p>Меҳмонхонаи <strong>СУҒДДЕЛЮКС</strong> соли 2010 бо ҳадафи фароҳам овардани макони беҳтарин барои истироҳат ва сафарҳои хизматӣ дар маркази шаҳр таъсис ёфтааст.</p>
+                    <p>Дар тӯли солҳо мо аз як меҳмонхонаи хурд ба меҳмонхонаи сатҳи олӣ табдил ёфтем, ки бо хизматрасонии босифат ва таваҷҷуҳ ба ҳар ҷузъиёти хурд маъруф аст.</p>
+                    <p>Имрӯз СУҒДДЕЛЮКС на танҳо меҳмонхона, балки фазои комили бароҳатист, ки дар он ҳар як ҷузъиёт барои истироҳати беҳтарини шумо андешида шудааст.</p>
+                </div>
+                <div class="story-image" data-aos="fade-left" data-aos-delay="300">
+                    <img src="/static/images/hotel-lobby.jpg" alt="Лоббии меҳмонхона" onerror="this.src='/static/images/room-default.jpg'">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Наши ценности -->
+    <section class="values-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Арзишҳои <span class="highlight">Мо</span></h2>
+            <div class="values-grid">
+                <div class="value-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="value-icon"><img src="/static/images/icons/free-animated-icon-verified-7920876.gif" width="100px" height="100px" alt="Сифати олӣ"></div>
+                    <h3>Сифати олӣ</h3>
+                    <p>Мо танҳо таҷҳизот ва маводи босифатро барои роҳати шумо истифода мебарем</p>
+                </div>
+                <div class="value-card" data-aos="flip-left" data-aos-delay="200">
+                    <div class="value-icon"><img src="/static/images/icons/free-animated-icon-care-11688516.gif" width="100px" height="100px" alt="Ғамхорӣ ба меҳмонон"></div>
+                    <h3>Ғамхорӣ ба меҳмонон</h3>
+                    <p>Қаноатмандии шумо барои мо муҳимтарин аст. Мо ба ҳар як меҳмон муносибати инфиродӣ дорем</p>
+                </div>
+                <div class="value-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="value-icon"><img src="/static/images/icons/free-animated-icon-eco-friendly-14178115.gif" width="100px" height="100px" alt="Экологичность"></div>
+                    <h3>Муҳити зист</h3>
+                    <p>Бо истифода аз технологияҳои муосир ва маводи экологӣ, мо ба ҳифзи табиат саҳм мегузорем</p>
+                </div>
+                <div class="value-card" data-aos="flip-left" data-aos-delay="400">
+                    <div class="value-icon"><img src="/static/images/icons/free-animated-icon-innovation-18996929.gif" width="100px" height="100px" alt="Инновации"></div>
+                    <h3>Навоварӣ</h3>
+                    <p>Мо пайваста технологияҳои навро ҷорӣ менамоем, то таҷрибаи шумо боз ҳам беҳтар гардад</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Услуги отеля -->
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Хизматрасониҳои <span class="highlight">Мо</span></h2>
+            <div class="services-grid">
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="service-image">
+                        <img src="/static/images/restaurant.jpg" alt="Тарабхона" onerror="this.src='/static/images/room-default.jpg'">
+                    </div>
+                    <div class="service-content">
+                        <h3>Тарабхонаи «Олӣ»</h3>
+                        <p>Таомҳои лазиз аз ошпазҳои мо. Таомҳои аврупоӣ ва шарқӣ бо сифати баланд</p>
+                        <ul class="service-features">
+                            <li>🕘 7:00 - 23:00</li>
+                            <li>🍽️ Наҳорӣ, нисфирӯзӣ ва шом</li>
+                            <li>🎂 Қабули маърака ва чорабиниҳо</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="service-image">
+                        <img src="/static/images/spa.jpg" alt="Маркази SPA" onerror="this.src='/static/images/room-default.jpg'">
+                    </div>
+                    <div class="service-content">
+                        <h3>SPA ва Wellness</h3>
+                        <p>Маҷмӯи пурраи хизматрасониҳои SPA барои оромӣ ва барқароршавӣ</p>
+                        <ul class="service-features">
+                            <li>🧖 Муолиҷаҳои SPA</li>
+                            <li>💆 Маҳс</li>
+                            <li>🏊 Ҳавз ва сауна</li>
+                            <li>🧘 Йога ва мулоҳиза</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="service-image">
+                        <img src="/static/images/business.jpg" alt="Маркази тиҷоратӣ" onerror="this.src='/static/images/room-default.jpg'">
+                    </div>
+                    <div class="service-content">
+                        <h3>Маркази тиҷоратӣ</h3>
+                        <p>Ҳама шароит барои баргузории вохӯриҳо ва чорабиниҳои тиҷоратӣ</p>
+                        <ul class="service-features">
+                            <li>💻 Ҳуҷраҳои музокира</li>
+                            <li>📊 Толори конфронс</li>
+                            <li>🖨️ Таҷҳизоти идорӣ</li>
+                            <li>📡 Wi-Fi-и баландсуръат</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="service-image">
+                        <img src="/static/images/fitness.jpg" alt="Маркази фитнес" onerror="this.src='/static/images/room-default.jpg'">
+                    </div>
+                    <div class="service-content">
+                        <h3>Маркази фитнес</h3>
+                        <p>Таҷҳизоти замонавӣ барои нигоҳ доштани саломатӣ ва қувваи ҷисмонӣ</p>
+                        <ul class="service-features">
+                            <li>🏋️ Толори машқ</li>
+                            <li>🧘 Минтақаи кардио</li>
+                            <li>👨‍🏫 Мураббиёни шахсӣ</li>
+                            <li>🕐 Шабонарӯзӣ фаъол аст</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Галерея -->
+    <section class="gallery-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Галереяи <span class="highlight">Меҳмонхона</span></h2>
+            <div class="gallery-grid">
+                <div class="gallery-item" data-aos="flip-up" data-aos-delay="100">
+                    <img src="/static/images/gallery-1.jpg" alt="Ҳуҷраи Люкс" onerror="this.src='/static/images/room-default.jpg'">
+                    <div class="gallery-overlay">
+                        <span>Ҳуҷраи Боҳашамат</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="flip-up" data-aos-delay="200">
+                    <img src="/static/images/gallery-2.jpg" alt="Тарабхона" onerror="this.src='/static/images/room-default.jpg'">
+                    <div class="gallery-overlay">
+                        <span>Тарабхона</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="flip-up" data-aos-delay="300">
+                    <img src="/static/images/gallery-3.jpg" alt="Ҳавз" onerror="this.src='/static/images/room-default.jpg'">
+                    <div class="gallery-overlay">
+                        <span>Ҳавз</span>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="flip-up" data-aos-delay="400">
+                    <img src="/static/images/gallery-4.jpg" alt="Минтақаи SPA" onerror="this.src='/static/images/room-default.jpg'">
+                    <div class="gallery-overlay">
+                        <span>Минтақаи SPA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Награды и сертификаты -->
+    <section class="awards-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Мукофотҳо ва <span class="highlight">Шаҳодатномаҳо</span></h2>
+            <div class="awards-grid">
+                <div class="award-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="award-icon"><img src="/static/images/icons/free-animated-icon-award-10971325.gif" width="100px" height="100px" alt="Best Hotel"></div>
+                    <h3>Беҳтарин меҳмонхона дар соли 2023</h3>
+                    <p>Мукофоти «Соҳибкории меҳмоннавозӣ»</p>
+                </div>
+                <div class="award-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="award-icon"><img src="/static/images/icons/free-animated-icon-star-19009724.gif" width="100px" height="100px" alt="4 stars"></div>
+                    <h3>4 ситора</h3>
+                    <p>Шаҳодатномаи байналмилалии сифат</p>
+                </div>
+                <div class="award-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="award-icon"><img src="/static/images/icons/free-animated-icon-eco-friendly-14178115.gif" width="100px" height="100px" alt="Экологичность"></div>
+                    <h3>Меҳмонхонаи экологӣ 2023</h3>
+                    <p>Шаҳодатномаи экологӣ</p>
+                </div>
+                <div class="award-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="award-icon"><img src="/static/images/icons/luggage-cart_19034857.gif" width="100px" height="100px" alt="Excellence"></div>
+                    <h3>Хизматрасонии дараҷаи олӣ</h3>
+                    <p>Мукофот барои хизматрасонии аъло</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Команда -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Дастаи <span class="highlight">Мо</span></h2>
+            <div class="team-grid">
+                <div class="team-member" data-aos="flip-left" data-aos-delay="100">
+                    <div class="member-photo">
+                        <img src="/static/images/manager.jpg" alt="Менеҷер" onerror="this.src='/static/images/room-default.jpg'">
+                    </div>
+                    <h3>Рустам Ализода</h3>
+                    <p class="member-role">Менеҷери меҳмонхона</p>
+                    <p class="member-bio">15 соли таҷриба дар соҳаи меҳмоннавозӣ. Барои меҳмонон таассуроти фаромӯшнашаванда эҷод мекунад.</p>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="200">
+                    <div class="member-photo">
+                        <img src="/static/images/chef.jpg" alt="Сарошпаз" onerror="this.src='/static/images/room-default.jpg'">
+                    </div>
+                    <h3>Даврон Азиззода</h3>
+                    <p class="member-role">Сарошпаз</p>
+                    <p class="member-bio">Дар тарабхонаҳои сатҳи Мишлен фаъолият кардааст. Барои меҳмонони мо шоҳкориҳои ошпазиро омода месозад.</p>
+                </div>
+                <div class="team-member" data-aos="flip-left" data-aos-delay="300">
+                    <div class="member-photo">
+                        <img src="/static/images/spa-master.jpg" alt="Менеҷери SPA" onerror="this.src='/static/images/room-default.jpg'">
+                    </div>
+                    <h3>Азиза Ҳасанзода</h3>
+                    <p class="member-role">Менеҷери SPA</p>
+                    <p class="member-bio">Мутахассиси соҳиби шаҳодатнома бо 10 соли таҷриба дар соҳаи саломатӣ ва истироҳат (wellness).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок для скачивания приложения - ИСПРАВЛЕННЫЙ -->
+<section class="app-download-section">
+    <div class="container">
+        <div class="app-download-wrapper" data-aos="fade-up">
+            <div class="app-download-content">
+                <div class="app-icon">
+                    <img src="/static/images/app-icon.png" alt="SUGDDELUXE App">
+                </div>
+                <div class="app-info">
+                    <h2 class="app-title">Замимаи <span class="highlight">SUGDDELUXE</span></h2>
+                    <p class="app-description">Беҳтарин таҷрибаи бронкунӣ ва хизматрасонии меҳмонхона дар дасти шумо!</p>
+                    
+                    <!-- Информация о версии приложения -->
+                    <div class="app-version" id="appVersion">
+                        <span class="version-badge">Версия 1.0.0</span>
+                        <span class="size-badge" id="appSize">Загрузка...</span>
+                    </div>
+                    
+                    <div class="app-features">
+                        <div class="app-feature">
+                            <span class="feature-icon">📱</span>
+                            <span class="feature-text">Бронкунии фаврӣ</span>
+                        </div>
+                        <div class="app-feature">
+                            <span class="feature-icon">🔔</span>
+                            <span class="feature-text">Хабарҳои бонусӣ</span>
+                        </div>
+                        <div class="app-feature">
+                            <span class="feature-icon">💳</span>
+                            <span class="feature-text">Пардохти онлайн</span>
+                        </div>
+                        <div class="app-feature">
+                            <span class="feature-icon">⭐</span>
+                            <span class="feature-text">Барномаи бонусӣ</span>
+                        </div>
+                    </div>
+                    
+                    <div class="download-buttons">
+                        <!-- Кнопка скачивания через роут FastAPI -->
+                        <a href="/download-app" class="download-btn android-btn" id="downloadBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.04-.83.22l-1.88 3.24c-2.86-1.21-6.08-1.21-8.94 0L5.65 5.67c-.19-.26-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C4.2 11.52 3.42 14.33 4.49 17.33h15.02c1.07-3 0.29-5.81-1.91-7.85zM9.5 14.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
+                            </svg>
+                            <div>
+                                <span>Барои Android</span>
+                                <small>Зеркашӣ кунед (APK)</small>
+                            </div>
+                        </a>
+                        <a href="#" class="download-btn ios-btn disabled" onclick="return false;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.02.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                            </svg>
+                            <div>
+                                <span>Барои iOS</span>
+                                <small>Ба зудӣ</small>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="security-note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#4CAF50">
+                            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 11.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+                        </svg>
+                        <span>Зеркашии бехатар | Андроид 5.0 ва боло</span>
+                    </div>
+                    
+                    <div class="app-qr">
+                        <div class="qr-code">
+                            <img src="/static/images/qr-code.png" alt="QR код барои зеркашӣ" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%233498db\'/%3E%3Ctext x=\'50\' y=\'55\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3EQR КОД%3C/text%3E%3C/svg%3E'">
+                        </div>
+                        <div class="qr-text">
+                            <p>Сканер кунед</p>
+                            <small>Барои зеркашии фаврӣ</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Контакты -->
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Тамос бо мо</h2>
+            <div class="contact-content">
+                <div class="contact-info" data-aos="fade-right">
+                    <div class="contact-item">
+                        <div class="contact-icon"><img src="/static/images/icons/free-animated-icon-location-12420726-ezgif.com-gif-maker.gif" width="50px" height="50px" alt="Суроға"></div>
+                        <div>
+                            <h3>Суроға</h3>
+                            <p>ш. Хуҷанд, кӯчаи Раҳим Ҷалил, 24</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><img src="/static/images/icons/free-animated-icon-telephone-17576940-ezgif.com-gif-maker.gif" width="50px" height="50px" alt="Телефон"></div>
+                        <div>
+                            <h3>Телефон</h3>
+                            <p>+992 (88) 999-30-90</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><img src="/static/images/icons/free-animated-icon-email-19018372-ezgif.com-gif-maker.gif" width="50px" height="50px" alt="Почтаи электронӣ"></div>
+                        <div>
+                            <h3>Почтаи электронӣ</h3>
+                            <p>info@sugdhotel.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><img src="/static/images/icons/free-animated-icon-clock-17518046-ezgif.com-gif-maker.gif" width="50px" height="50px" alt="Соатҳои корӣ"></div>
+                        <div>
+                            <h3>Соатҳои корӣ</h3>
+                            <p>Шабонарӯзӣ, 365 рӯз дар як сол</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-map" data-aos="fade-left" data-aos-delay="300">
+                    <div class="map-placeholder">
+                        <div class="map-content">
+                            <h3>Мо дар ин ҷо қарор дорем!</h3>
+                            <p>Дар маркази шаҳр, наздикии ҷойҳои дидании асосӣ</p>
+                            <div class="map-features">
+                                <span>🚇 Маркази шаҳр: 5 дақиқа роҳ</span>
+                                <span>🚗 Истгоҳи мошин: ройгон</span>
+                                <span>🏛️ Боғ: 10 дақиқа роҳ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Подключаем AOS библиотеку для анимаций -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+<style>
+
+/* Стили для информации о версии */
+.app-version {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.version-badge, .size-badge {
+    background: #e0e0e0;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+}
+
+.version-badge {
+    background: #3498db;
+    color: white;
+}
+
+.size-badge {
+    background: #f0f0f0;
+}
+
+/* Анимация загрузки */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Базовые стили */
+.about-container {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+}
+
+.highlight {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: #2c3e50;
+    width: 100%;
+}
+
+/* Hero секция */
+.hero-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    min-height: 80vh;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    width: 100%;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    width: 100%;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 2rem;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.stat {
+    text-align: center;
+    flex: 1;
+    min-width: 100px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 100%;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-width: 100%;
+}
+
+/* История */
+.story-section {
+    padding: 6rem 0;
+    background: #f8f9fa;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.story-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+}
+
+.story-text {
+    width: 100%;
+}
+
+.story-text p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.8;
+    width: 100%;
+}
+
+.story-image {
+    width: 100%;
+    max-width: 100%;
+}
+
+.story-image img {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 100%;
+}
+
+/* Ценности */
+.values-section {
+    padding: 6rem 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.value-card {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+}
+
+.value-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.value-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+/* Услуги */
+.services-section {
+    padding: 6rem 0;
+    background: #f8f9fa;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.service-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-image {
+    width: 100%;
+    max-width: 100%;
+}
+
+.service-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    max-width: 100%;
+}
+
+.service-content {
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.service-content h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Галерея */
+.gallery-section {
+    padding: 6rem 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 250px;
+    width: 100%;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    max-width: 100%;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    padding: 1rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+/* Награды */
+.awards-section {
+    padding: 6rem 0;
+    background: #f8f9fa;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.awards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.award-card {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.award-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Команда */
+.team-section {
+    padding: 6rem 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 3rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.team-member {
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.member-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 1.5rem;
+    border: 5px solid #3498db;
+    max-width: 100%;
+}
+
+.member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-width: 100%;
+}
+
+.team-member h3 {
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.member-role {
+    color: #3498db;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.member-bio {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Стили для блока скачивания приложения */
+.app-download-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+.app-download-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" opacity="0.1"><path fill="white" d="M0,0 L1000,0 L1000,1000 L0,1000 Z M500,500 L800,300 L800,700 Z"/></svg>');
+    background-size: cover;
+    pointer-events: none;
+}
+
+.app-download-wrapper {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    max-width: 100%;
+}
+
+.app-download-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    padding: 3rem;
+    flex-wrap: wrap;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.app-icon {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.app-icon img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    border-radius: 15px;
+}
+
+.app-info {
+    flex: 1;
+    min-width: 250px;
+}
+
+.app-title {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.app-description {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.app-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.app-feature {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.feature-icon {
+    font-size: 1.2rem;
+}
+
+.download-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    min-width: 200px;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn svg {
+    width: 30px;
+    height: 30px;
+}
+
+.download-btn span {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.download-btn small {
+    display: block;
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.android-btn {
+    background: #3ddc84;
+    color: #1a1a1a;
+}
+
+.android-btn:hover {
+    background: #34c975;
+}
+
+.ios-btn {
+    background: #000;
+    color: white;
+}
+
+.ios-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.ios-btn.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.security-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.app-qr {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.qr-code {
+    width: 70px;
+    height: 70px;
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.qr-code img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.qr-text p {
+    font-weight: bold;
+    margin: 0;
+    color: #2c3e50;
+}
+
+.qr-text small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Контакты */
+.contact-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.contact-info {
+    width: 100%;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.contact-icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.contact-item h3 {
+    margin-bottom: 0.5rem;
+}
+
+.map-placeholder {
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    padding: 2rem;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.map-content {
+    text-align: center;
+    width: 100%;
+}
+
+.map-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .about-container .container {
+        padding: 0 15px;
+    }
+    
+    .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 2rem 15px;
+        gap: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-stats {
+        justify-content: center;
+        gap: 2rem;
+    }
+    
+    .story-content,
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .values-grid,
+    .awards-grid,
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.5rem;
+    }
+    
+    .hero-image img {
+        height: 300px;
+    }
+    
+    .hero-section {
+        transform: none !important;
+    }
+    
+    .app-download-content {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .app-icon {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .app-title {
+        font-size: 1.5rem;
+    }
+    
+    .app-features {
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+    
+    .download-buttons {
+        justify-content: center;
+    }
+    
+    .download-btn {
+        min-width: 180px;
+        padding: 0.6rem 1rem;
+    }
+    
+    .app-qr {
+        justify-content: center;
+    }
+    
+    .security-note {
+        margin: 0 auto 1rem auto;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 480px) {
+    .about-container .container {
+        padding: 0 10px;
+    }
+    
+    .hero-section {
+        padding: 1.5rem 10px;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .stat {
+        min-width: auto;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .contact-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .app-download-content {
+        padding: 1.5rem;
+    }
+    
+    .download-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .app-feature {
+        justify-content: center;
+    }
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+</style>
+
+<script>
+// Инициализация AOS анимаций
+document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 100
+    });
+    
+    // Параллакс эффект только для hero секции на десктопе
+    if (window.innerWidth > 768) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-section');
+            const heroHeight = hero ? hero.offsetHeight : 0;
+            
+            if (hero && scrolled < heroHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+            }
+        });
+    }
+    
+    // Анимация счетчиков
+    function animateCounter(element, target, duration) {
+        let start = 0;
+        const increment = target / (duration / 16);
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= target) {
+                element.textContent = target + '+';
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(start) + '+';
+            }
+        }, 16);
+    }
+    
+    // Запуск анимации счетчиков при скролле
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const stats = entry.target.querySelectorAll('.stat-number');
+                stats.forEach(stat => {
+                    const target = parseInt(stat.textContent);
+                    animateCounter(stat, target, 2000);
+                });
+            }
+        });
+    });
+    
+    const heroStats = document.querySelector('.hero-stats');
+    if (heroStats) {
+        observer.observe(heroStats);
+    }
+    
+    // Проверка на горизонтальный скролл
+    function checkHorizontalScroll() {
+        const scrollWidth = document.documentElement.scrollWidth;
+        const clientWidth = document.documentElement.clientWidth;
+        
+        if (scrollWidth > clientWidth) {
+            console.warn('⚠️ Обнаружен горизонтальный скролл! Ширина:', scrollWidth, 'Видимая:', clientWidth);
+            document.documentElement.style.overflowX = 'hidden';
+            document.body.style.overflowX = 'hidden';
+        }
+    }
+    
+    // Проверяем после загрузки и ресайза
+    setTimeout(checkHorizontalScroll, 100);
+    window.addEventListener('load', checkHorizontalScroll);
+    window.addEventListener('resize', checkHorizontalScroll);
+});
+
+// Получение информации о приложении с сервера
+async function getAppInfo() {
+    try {
+        const response = await fetch('/app-info');
+        const data = await response.json();
+        
+        if (!data.error) {
+            // Обновляем информацию о версии и размере
+            const sizeBadge = document.getElementById('appSize');
+            if (sizeBadge) {
+                sizeBadge.textContent = `${data.size} МБ`;
+                sizeBadge.classList.remove('loading');
+            }
+            
+            // Обновляем версию если нужно
+            const versionBadge = document.querySelector('.version-badge');
+            if (versionBadge && data.version) {
+                versionBadge.textContent = `Версия ${data.version}`;
+            }
+        } else {
+            console.error('Ошибка загрузки информации о приложении:', data.error);
+            const sizeBadge = document.getElementById('appSize');
+            if (sizeBadge) {
+                sizeBadge.textContent = 'Файл не найден';
+                sizeBadge.style.background = '#f44336';
+                sizeBadge.style.color = 'white';
+            }
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        const sizeBadge = document.getElementById('appSize');
+        if (sizeBadge) {
+            sizeBadge.textContent = 'Ошибка загрузки';
+            sizeBadge.style.background = '#f44336';
+            sizeBadge.style.color = 'white';
+        }
+    }
+}
+
+// Обработка скачивания с уведомлением
+function setupDownloadHandler() {
+    const downloadBtn = document.getElementById('downloadBtn');
+    if (downloadBtn) {
+        downloadBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            // Показываем уведомление о начале скачивания
+            showNotification('Скачивание началось! Файл: SUGDDELUXE.apk', 'success');
+            
+            // Выполняем скачивание
+            try {
+                const response = await fetch('/download-app');
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'SUGDDELUXE.apk';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Ошибка при скачивании:', error);
+                showNotification('Ошибка при скачивании. Попробуйте позже.', 'error');
+            }
+        });
+    }
+}
+
+// Функция показа уведомления
+function showNotification(message, type) {
+    // Удаляем старые уведомления
+    const oldNotifications = document.querySelectorAll('.custom-notification');
+    oldNotifications.forEach(notif => notif.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = `custom-notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <span class="notification-icon">${type === 'success' ? '✅' : '⚠️'}</span>
+            <span class="notification-message">${message}</span>
+        </div>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        animation: slideIn 0.3s ease-out;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        font-family: Arial, sans-serif;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// Добавляем CSS для уведомлений
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Запускаем при загрузке страницы
+document.addEventListener('DOMContentLoaded', function() {
+    getAppInfo();
+    setupDownloadHandler();
+});
+</script>
+
+</script>
+{% endblock %}

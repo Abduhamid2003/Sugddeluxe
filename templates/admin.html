@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <header class="admin-header" data-aos="fade-down">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="admin-logo">
+                    <div class="logo-icon">🏨</div>
+                    <div class="logo-text">
+                        <h1>Панели идоракунӣ</h1>
+                        <p>Меҳмонхонаи СУҒДДЕЛЮКС</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="admin-nav">
+                    <a href="/admin" class="admin-nav-link active">📊 Дашборд</a>
+                    <a href="/admin/rooms" class="admin-nav-link">🏨 Ҳуҷраҳо</a>
+                    <a href="/admin/bookings" class="admin-nav-link">📅 Фармоишҳо</a>
+                </div>
+                <div class="admin-info">
+                    <div class="user-avatar">
+                        <span class="avatar-icon">👑</span>
+                        <div class="avatar-status"></div>
+                    </div>
+                    <div class="user-info">
+                        <strong>{{ admin.username }}</strong>
+                        <span>Мудир</span>
+                    </div>
+                </div>
+                <a href="/admin/logout" class="logout-btn">
+                    <span class="logout-icon">🚪</span>
+                    Баромадан
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="admin-stats">
+        <div class="stats-grid">
+            <div class="stat-card" data-aos="fade-up">
+                <div class="stat-icon">🏨</div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ total_rooms }}</div>
+                    <div class="stat-label">Ҳамаи ҳуҷраҳо</div>
+                </div>
+                <div class="stat-trend up">📈</div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="stat-icon">📅</div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ active_bookings }}</div>
+                    <div class="stat-label">Фармоишҳои фаъол</div>
+                </div>
+                <div class="stat-trend up">🔥</div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="stat-icon">💰</div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ total_revenue }} сом.</div>
+                    <div class="stat-label">Даромади умумӣ</div>
+                </div>
+                <div class="stat-trend up">💎</div>
+            </div>
+            
+            <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-content">
+                    <div class="stat-number">{{ occupancy_rate }}%</div>
+                    <div class="stat-label">Пуршавии ҷой</div>
+                </div>
+                <div class="stat-trend {% if occupancy_rate > 80 %}up{% else %}down{% endif %}">
+                    {% if occupancy_rate > 80 %}📈{% else %}📉{% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="admin-main">
+        <div class="recent-bookings">
+            <div class="section-header">
+                <h2>🔄 Фармоишҳои охирин</h2>
+                <a href="/admin/bookings" class="view-all-link">Дидани ҳама →</a>
+            </div>
+            
+            <div class="bookings-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Меҳмон</th>
+                            <th>Ҳуҷра</th>
+                            <th>Санаҳо</th>
+                            <th>Нарх</th>
+                            <th>Ҳолат</th>
+                            <th>Амал</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in recent_bookings %}
+                        <tr>
+                            <td>#{{ booking.id }}</td>
+                            <td>{{ booking.guest_name }}</td>
+                            <td>{{ booking.room_number }}</td>
+                            <td>{{ booking.check_in }} → {{ booking.check_out }}</td>
+                            <td>{{ booking.total_price }} сом.</td>
+                            <td>
+                                <span class="status-badge status-{{ booking.status }}">
+                                    {% if booking.status == 'confirmed' %}✅ Тасдиқ шуд
+                                    {% elif booking.status == 'cancelled' %}❌ Бекор шуд
+                                    {% elif booking.status == 'completed' %}✓ Анҷом ёфт
+                                    {% else %}{{ booking.status }}{% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                {% if booking.status == 'confirmed' %}
+                                <button class="btn-cancel-small" onclick="cancelBooking({{ booking.id }})" title="Бекор кардан">❌</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+.admin-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.admin-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+}
+
+.logo-text h1 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.logo-text p {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.admin-nav {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    padding: 0.3rem;
+    border-radius: 12px;
+}
+
+.admin-nav-link {
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.admin-nav-link:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.admin-nav-link.active {
+    background: #3498db;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.user-avatar {
+    position: relative;
+}
+
+.avatar-icon {
+    font-size: 1.8rem;
+}
+
+.avatar-status {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background: #27ae60;
+    border-radius: 50%;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-info strong {
+    font-size: 0.9rem;
+}
+
+.user-info span {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.admin-stats {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: white;
+    padding: 1.2rem;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s;
+    border-left: 4px solid #3498db;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.stat-icon {
+    font-size: 2rem;
+}
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.stat-trend {
+    font-size: 1.2rem;
+}
+
+.admin-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem 2rem;
+}
+
+.recent-bookings {
+    background: white;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+.view-all-link {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.bookings-table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.status-badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.status-confirmed {
+    background: #d5f4e6;
+    color: #27ae60;
+}
+
+.status-cancelled {
+    background: #ffeaea;
+    color: #e74c3c;
+}
+
+.status-completed {
+    background: #e3f2fd;
+    color: #3498db;
+}
+
+.btn-cancel-small {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.btn-cancel-small:hover {
+    background: #c0392b;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .admin-nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    th, td {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+function cancelBooking(bookingId) {
+    if (confirm('Шумо мутмаин ҳастед, ки мехоҳед ин бронро бекор кунед?')) {
+        fetch(`/admin/api/cancel-booking/${bookingId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert(data.message);
+                }
+            });
+    }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,554 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-login-container">
+    <!-- Анимированный фон -->
+    <div class="login-background">
+        <div class="floating-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+            <div class="shape shape-4"></div>
+        </div>
+        <div class="particles-container" id="loginParticles"></div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="login-content">
+        <div class="login-card" data-aos="zoom-in" data-aos-duration="800">
+            <!-- Заголовок с анимацией -->
+            <div class="login-header">
+                <div class="login-icon">
+                    <div class="icon-circle">
+                        <span class="icon">🔐</span>
+                        <div class="icon-glow"></div>
+                    </div>
+                </div>
+                <h1 class="login-title">Панели идоракунӣ</h1>
+                <p class="login-subtitle">Меҳмонхонаи <span class="highlight">СУҒДДЕЛЮКС</span></p>
+            </div>
+
+            <!-- Форма входа -->
+            <form class="login-form" method="post" action="/admin/login">
+                <div class="form-group" data-aos="fade-right" data-aos-delay="200">
+                    <label class="form-label">
+                        <span class="label-icon">👤</span>
+                        Номи корбар
+                    </label>
+                    <div class="input-container">
+                        <input type="text" name="username" required class="form-input" placeholder="Логинро ворид кунед">
+                        <div class="input-focus-line"></div>
+                    </div>
+                </div>
+
+                <div class="form-group" data-aos="fade-left" data-aos-delay="300">
+                    <label class="form-label">
+                        <span class="label-icon">🔒</span>
+                        Рамз
+                    </label>
+                    <div class="input-container">
+                        <input type="password" name="password" required class="form-input" placeholder="Рамзро ворид кунед">
+                        <div class="input-focus-line"></div>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn" data-aos="fade-up" data-aos-delay="400">
+                    <span class="btn-text">Ба система ворид шавед</span>
+                    <span class="btn-icon">🚀</span>
+                    <div class="btn-shine"></div>
+                </button>
+            </form>
+
+            <!-- Демо доступ -->
+            <!-- <div class="demo-info" data-aos="fade-up" data-aos-delay="600">
+                <div class="demo-header">
+                    <span class="demo-icon">💡</span>
+                    <strong></strong>
+                </div>
+                <div class="demo-credentials">
+                    <div class="credential">
+                        <span class="cred-label"></span>
+                        <code class="cred-value"></code>
+                    </div>
+                    <div class="credential">
+                        <span class="cred-label"></span>
+                        <code class="cred-value"></code>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- Анимированные элементы -->
+            <div class="login-decoration">
+                <div class="decoration-item deco-1">🏨</div>
+                <div class="decoration-item deco-2">💼</div>
+                <div class="decoration-item deco-3">📊</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <div class="login-footer">
+        <p>Системаи идоракунии меҳмонхона © 2026 СУҒДДЕЛЮКС</p>
+    </div>
+</div>
+
+<style>
+/* Базовые стили */
+.admin-login-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+.highlight {
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* Анимированный фон */
+.login-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 100px;
+    height: 100px;
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    right: 10%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 80px;
+    height: 80px;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 4s;
+}
+
+.shape-4 {
+    width: 120px;
+    height: 120px;
+    top: 30%;
+    right: 20%;
+    animation-delay: 1s;
+}
+
+/* Основной контент */
+.login-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 450px;
+    padding: 20px;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 3rem 2.5rem;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.login-card:hover::before {
+    left: 100%;
+}
+
+/* Заголовок */
+.login-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.login-icon {
+    margin-bottom: 1.5rem;
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(52, 152, 219, 0.3);
+}
+
+.icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.icon-glow {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: 0.6;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.login-title {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.login-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Форма */
+.login-form {
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.label-icon {
+    font-size: 1.1rem;
+}
+
+.input-container {
+    position: relative;
+}
+
+.form-input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 1rem;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 5px 20px rgba(52, 152, 219, 0.2);
+    transform: translateY(-2px);
+}
+
+.input-focus-line {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.form-input:focus ~ .input-focus-line {
+    width: 100%;
+}
+
+/* Кнопка входа */
+.login-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 1.2rem 2rem;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+}
+
+.login-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
+}
+
+.login-btn:active {
+    transform: translateY(-1px);
+}
+
+.btn-text {
+    position: relative;
+    z-index: 2;
+}
+
+.btn-icon {
+    position: relative;
+    z-index: 2;
+    animation: bounce 2s infinite;
+}
+
+.btn-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+}
+
+.login-btn:hover .btn-shine {
+    left: 100%;
+}
+
+/* Демо информация */
+.demo-info {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border-left: 4px solid #3498db;
+}
+
+.demo-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.demo-icon {
+    font-size: 1.2rem;
+}
+
+.demo-credentials {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.credential {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cred-label {
+    color: #666;
+    font-weight: 500;
+    min-width: 60px;
+}
+
+.cred-value {
+    background: #2c3e50;
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+/* Декорации */
+.login-decoration {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.decoration-item {
+    font-size: 1.5rem;
+    opacity: 0.7;
+    animation: float 3s ease-in-out infinite;
+}
+
+.deco-1 { animation-delay: 0s; }
+.deco-2 { animation-delay: 1s; }
+.deco-3 { animation-delay: 2s; }
+
+/* Футер */
+.login-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* Анимации */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.05); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Частицы */
+.particles-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: float 8s infinite linear;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .login-card {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+    }
+    
+    .login-title {
+        font-size: 1.7rem;
+    }
+    
+    .demo-credentials {
+        flex-direction: column;
+    }
+    
+    .credential {
+        justify-content: space-between;
+    }
+}
+</style>
+
+<script>
+// Создание частиц для фона
+function createLoginParticles() {
+    const container = document.getElementById('loginParticles');
+    if (!container) return;
+    
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.width = Math.random() * 6 + 2 + 'px';
+        particle.style.height = particle.style.width;
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        container.appendChild(particle);
+    }
+}
+
+// Анимация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    createLoginParticles();
+    
+    // Добавляем анимацию для инпутов при фокусе
+    const inputs = document.querySelectorAll('.form-input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+    });
+    
+    // Анимация кнопки при наведении
+    const loginBtn = document.querySelector('.login-btn');
+    if (loginBtn) {
+        loginBtn.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-3px) scale(1.02)';
+        });
+        
+        loginBtn.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    }
+});
+</script>
+{% endblock %}

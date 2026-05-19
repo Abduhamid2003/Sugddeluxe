@@ -1,0 +1,454 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="header-left">
+                <div class="admin-logo">
+                    <div class="logo-icon">🏨</div>
+                    <div class="logo-text">
+                        <h1>Управление бронированиями</h1>
+                        <p>Меҳмонхонаи СУҒДДЕЛЮКС</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="admin-nav">
+                    <a href="/admin" class="admin-nav-link">📊 Дашборд</a>
+                    <a href="/admin/rooms" class="admin-nav-link">🏨 Ҳуҷраҳо</a>
+                    <a href="/admin/bookings" class="admin-nav-link active">📅 Фармоишҳо</a>
+                </div>
+                <div class="admin-info">
+                    <div class="user-avatar">
+                        <span class="avatar-icon">👑</span>
+                        <div class="avatar-status"></div>
+                    </div>
+                    <div class="user-info">
+                        <strong>{{ admin.username }}</strong>
+                        <span>Мудир</span>
+                    </div>
+                </div>
+                <a href="/admin/logout" class="logout-btn">🚪 Баромадан</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <section class="admin-section">
+            <div class="section-header">
+                <h2>📅 Ҳамаи фармоишҳо</h2>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" data-filter="all">Ҳама</button>
+                    <button class="filter-tab" data-filter="confirmed">Тасдиқшуда</button>
+                    <button class="filter-tab" data-filter="completed">Анҷомёфта</button>
+                    <button class="filter-tab" data-filter="cancelled">Бекоршуда</button>
+                </div>
+            </div>
+            
+            <div class="bookings-table-container">
+                <table class="bookings-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Меҳмон</th>
+                            <th>Тамос</th>
+                            <th>Ҳуҷра</th>
+                            <th>Санаҳо</th>
+                            <th>Нарх</th>
+                            <th>Ҳолат</th>
+                            <th>Амал</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in all_bookings %}
+                        <tr data-status="{{ booking.status }}">
+                            <td>#{{ booking.id }}</td>
+                            <td><strong>{{ booking.guest_name }}</strong></td>
+                            <td>
+                                <div>📧 {{ booking.guest_email }}</div>
+                                <div>📞 {{ booking.guest_phone }}</div>
+                            </td>
+                            <td>{{ booking.room_number }} ({{ booking.room_type }})</td>
+                            <td>{{ booking.check_in }} → {{ booking.check_out }}</td>
+                            <td><strong>{{ booking.total_price }} сом.</strong></td>
+                            <td>
+                                <span class="status-badge status-{{ booking.status }}">
+                                    {% if booking.status == 'confirmed' %}✅ Тасдиқ шуд
+                                    {% elif booking.status == 'cancelled' %}❌ Бекор шуд
+                                    {% elif booking.status == 'completed' %}✓ Анҷом ёфт
+                                    {% else %}{{ booking.status }}{% endif %}
+                                </span>
+                            </td>
+                            <td>
+                                {% if booking.status == 'confirmed' %}
+                                <button class="btn-action btn-cancel" onclick="cancelBooking({{ booking.id }})" title="Бекор кардан">❌</button>
+                                <button class="btn-action btn-complete" onclick="completeBooking({{ booking.id }})" title="Анҷом додан">✓</button>
+                                {% endif %}
+                                <button class="btn-action btn-email" onclick="sendEmailBooking({{ booking.id }})" title="Email фиристодан">📧</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            {% if not all_bookings %}
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h4>Ҳеҷ фармоише нест</h4>
+                <p>Фармоишҳо пайдо нашуд</p>
+            </div>
+            {% endif %}
+        </section>
+    </main>
+</div>
+
+<style>
+.admin-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.admin-header {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+    padding: 1rem 0;
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+}
+
+.logo-text h1 {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.logo-text p {
+    margin: 0;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.admin-nav {
+    display: flex;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    padding: 0.3rem;
+    border-radius: 12px;
+}
+
+.admin-nav-link {
+    padding: 0.5rem 1rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.admin-nav-link:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.admin-nav-link.active {
+    background: #3498db;
+}
+
+.admin-info {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.user-avatar {
+    position: relative;
+}
+
+.avatar-icon {
+    font-size: 1.8rem;
+}
+
+.avatar-status {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background: #27ae60;
+    border-radius: 50%;
+}
+
+.user-info strong {
+    font-size: 0.9rem;
+}
+
+.user-info span {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.logout-btn {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.admin-main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.admin-section {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f8f9fa;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #2c3e50;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-tab {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #f8f9fa;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.filter-tab.active {
+    background: #3498db;
+    color: white;
+}
+
+.filter-tab:hover {
+    background: #3498db;
+    color: white;
+}
+
+.bookings-table-container {
+    overflow-x: auto;
+}
+
+.bookings-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bookings-table th,
+.bookings-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.bookings-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.status-confirmed {
+    background: #d5f4e6;
+    color: #27ae60;
+}
+
+.status-cancelled {
+    background: #ffeaea;
+    color: #e74c3c;
+}
+
+.status-completed {
+    background: #e3f2fd;
+    color: #3498db;
+}
+
+.btn-action {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.3rem 0.5rem;
+    border-radius: 6px;
+    transition: all 0.3s;
+}
+
+.btn-action:hover {
+    transform: scale(1.1);
+}
+
+.btn-cancel:hover {
+    background: #ffeaea;
+}
+
+.btn-complete:hover {
+    background: #d5f4e6;
+}
+
+.btn-email:hover {
+    background: #e3f2fd;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    opacity: 0.5;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-tabs {
+        justify-content: center;
+    }
+    
+    .bookings-table th {
+        display: none;
+    }
+    
+    .bookings-table td {
+        display: block;
+        padding: 0.8rem;
+        border-bottom: none;
+    }
+    
+    .bookings-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 120px;
+    }
+    
+    .bookings-table tr {
+        border-bottom: 2px solid #e9ecef;
+        display: block;
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<script>
+document.querySelectorAll('.filter-tab').forEach(tab => {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        
+        const filter = this.dataset.filter;
+        const rows = document.querySelectorAll('tbody tr');
+        
+        rows.forEach(row => {
+            if (filter === 'all' || row.dataset.status === filter) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});
+
+function cancelBooking(bookingId) {
+    if (confirm('Шумо мутмаин ҳастед, ки мехоҳед ин бронро бекор кунед?')) {
+        fetch(`/admin/api/cancel-booking/${bookingId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.success) location.reload();
+            });
+    }
+}
+
+function completeBooking(bookingId) {
+    if (confirm('Шумо мутмаин ҳастед, ки мехоҳед ин бронро анҷом додашуда қайд кунед?')) {
+        fetch(`/admin/api/complete-booking/${bookingId}`, { method: 'POST' })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.success) location.reload();
+            });
+    }
+}
+
+function sendEmailBooking(bookingId) {
+    fetch(`/admin/api/send-booking-email/${bookingId}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+        });
+}
+</script>
+{% endblock %}

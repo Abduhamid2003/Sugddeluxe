@@ -1,0 +1,793 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="success-container">
+    <!-- Анимированный фон -->
+    <div class="success-background">
+        <div class="confetti-container" id="confetti"></div>
+        <div class="floating-elements">
+            <div class="float-element el-1">🎉</div>
+            <div class="float-element el-2">✨</div>
+            <div class="float-element el-3">🏨</div>
+            <div class="float-element el-4">⭐</div>
+            <div class="float-element el-5">🎊</div>
+        </div>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="success-content">
+        <!-- Анимированная иконка успеха -->
+        <div class="success-icon" data-aos="zoom-in" data-aos-duration="1000">
+            <div class="icon-circle">
+                <div class="checkmark">✓</div>
+                <div class="icon-glow"></div>
+                <div class="pulse-ring"></div>
+            </div>
+        </div>
+
+        <!-- Заголовок -->
+        <div class="success-header" data-aos="fade-up" data-aos-delay="300">
+            <h1 class="success-title">Фармоиш тасдиқ шуд!</h1>
+            <p class="success-subtitle">Ҳуҷраи шумо бо муваффақият банд карда шуд</p>
+        </div>
+
+        <!-- Карточка с деталями бронирования -->
+        <div class="booking-card" data-aos="fade-up" data-aos-delay="500">
+            <div class="card-header">
+                <div class="card-badge">
+                    <span class="badge-icon">🎯</span>
+                    Фармоиш #{{ booking.id }}
+                </div>
+                <div class="card-status status-confirmed">
+                    ✅ Тасдиқ шуд
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="booking-details-grid">
+                    <!-- Левая колонка - Информация о госте -->
+                    <div class="detail-section">
+                        <h3 class="section-title">
+                            <span class="section-icon">👤</span>
+                            Маълумот дар бораи меҳмон
+                        </h3>
+                        <div class="detail-item">
+                            <span class="detail-label">Номи пурра:</span>
+                            <span class="detail-value">{{ booking.guest_name }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Email:</span>
+                            <span class="detail-value">{{ booking.guest_email }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Телефон:</span>
+                            <span class="detail-value">{{ booking.guest_phone }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Правая колонка - Детали бронирования -->
+                    <div class="detail-section">
+                        <h3 class="section-title">
+                            <span class="section-icon">📅</span>
+                            Тафсилоти фармоиш
+                        </h3>
+                        <div class="detail-item">
+                            <span class="detail-label">Ҳуҷра:</span>
+                            <span class="detail-value">{{ booking.room_number }} ({{ booking.room_type }})</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Воридишавӣ:</span>
+                            <span class="detail-value highlight">{{ booking.check_in }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Баромад:</span>
+                            <span class="detail-value highlight">{{ booking.check_out }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Шабҳо:</span>
+                            <span class="detail-value">
+                                {{ booking.nights if booking.nights else '1' }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Итоговая стоимость -->
+                <div class="booking-total" data-aos="fade-up" data-aos-delay="700">
+                    <div class="total-line">
+                        <span class="total-label">Нархи умумӣ:</span>
+                        <span class="total-amount">{{ booking.total_price }} сом.</span>
+                    </div>
+                    <div class="total-note">
+                        *Пардохт дар вақти ҷойгиршавӣ сурат мегирад
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Дополнительная информация -->
+        <div class="info-cards" data-aos="fade-up" data-aos-delay="800">
+            <div class="info-card">
+                <div class="info-icon">🏨</div>
+                <h4>Омодагӣ барои ҷойгиршавӣ</h4>
+                <p>Воридишавӣ аз соати 14:00, баромад то 12:00. Дар сурати мавҷуд будани ҳуҷраҳои холӣ, воридишавии барвақтро таъмин мекунем.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">📧</div>
+                <h4>Тасдиқ ба email</h4>
+                <p>Тафсилоти фармоиш ба суроғаи почтаи электронии шумо {{ booking.guest_email }} фиристода шуд.</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">📞</div>
+                <h4>Дастгирии 24/7</h4>
+                <p>Барои ҳама саволҳо занг занед: +992 (88) 999-30-90. Мо ҳамеша барои кӯмак омодаем!</p>
+            </div>
+        </div>
+
+        <!-- Кнопки действий -->
+        <div class="action-buttons" data-aos="fade-up" data-aos-delay="900">
+            <a href="/" class="btn-primary">
+                <span class="btn-icon">🏠</span>
+                Ба саҳифаи асосӣ
+            </a>
+            <a href="/rooms" class="btn-secondary">
+                <span class="btn-icon">🏨</span>
+                Боз ҳуҷра банд кардан
+            </a>
+            <button class="btn-download" onclick="downloadConfirmation()">
+                <span class="btn-icon">📄</span>
+                Тасдиқро боргирӣ кунед
+            </button>
+        </div>
+
+        <!-- Таймер обратного отсчета -->
+        <div class="countdown-timer" data-aos="fade-up" data-aos-delay="1000">
+            <div class="timer-text">Гузариши худкор ба саҳифаи асосӣ баъд аз:</div>
+            <div class="timer-display" id="countdown">30</div>
+            <div class="timer-seconds">сония</div>
+        </div>
+    </div>
+
+    <!-- Поздравительное сообщение -->
+    <div class="congratulations" data-aos="fade-up" data-aos-delay="1100">
+        <div class="congrats-content">
+            <h3>Ташаккур барои интихоби меҳмонхонаи СУҒДДЕЛЮКС!</h3>
+            <p>Мо ҳуҷраи шуморо барои омадани шумо омода мекунем ва ҳама чизро барои истироҳати бароҳати шумо анҷом медиҳем.</p>
+            <div class="hotel-signature">
+                <span class="signature-icon">🏨</span>
+                <span>Бо эҳтиром, дастаи меҳмонхонаи СУҒДДЕЛЮКС</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Стили -->
+<style>
+.success-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+    padding: 2rem 1rem;
+}
+
+/* Анимированный фон */
+.success-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.confetti-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ffd700;
+    opacity: 0.8;
+    animation: confetti-fall 5s linear infinite;
+}
+
+.floating-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.float-element {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.3;
+    animation: float 6s ease-in-out infinite;
+}
+
+.el-1 { top: 10%; left: 5%; animation-delay: 0s; }
+.el-2 { top: 20%; right: 10%; animation-delay: 1s; }
+.el-3 { bottom: 30%; left: 15%; animation-delay: 2s; }
+.el-4 { top: 40%; right: 20%; animation-delay: 3s; }
+.el-5 { bottom: 20%; right: 5%; animation-delay: 4s; }
+
+/* Основной контент */
+.success-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Иконка успеха */
+.success-icon {
+    margin-bottom: 2rem;
+}
+
+.icon-circle {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(39, 174, 96, 0.4);
+    animation: icon-bounce 2s ease-in-out;
+}
+
+.checkmark {
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.icon-glow {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.6;
+    animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.pulse-ring {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 2px solid #27ae60;
+    border-radius: 50%;
+    animation: pulse-ring 2s ease-out infinite;
+}
+
+/* Заголовок */
+.success-header {
+    margin-bottom: 3rem;
+}
+
+.success-title {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+.success-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* Карточка бронирования */
+.booking-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+    text-align: left;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #f8f9fa;
+}
+
+.card-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 0.7rem 1.2rem;
+    border-radius: 15px;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.badge-icon {
+    font-size: 1.2rem;
+}
+
+.card-status {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.status-confirmed {
+    background: #d5f4e6;
+    color: #27ae60;
+}
+
+/* Детали бронирования */
+.booking-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .booking-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.detail-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 15px;
+    border-left: 4px solid #3498db;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.section-icon {
+    font-size: 1.3rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    color: #666;
+    font-weight: 500;
+}
+
+.detail-value {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.highlight {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Итоговая стоимость */
+.booking-total {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.total-label {
+    opacity: 0.9;
+}
+
+.total-amount {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffd700;
+}
+
+.total-note {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Информационные карточки */
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem;
+    border-radius: 15px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+}
+
+.info-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.info-card h4 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.info-card p {
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* Кнопки действий */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary, .btn-download {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(231, 76, 60, 0.6);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+    transform: translateY(-3px);
+}
+
+.btn-download {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-download:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(52, 152, 219, 0.6);
+}
+
+.btn-icon {
+    font-size: 1.2rem;
+}
+
+/* Таймер обратного отсчета */
+.countdown-timer {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 2rem;
+}
+
+.timer-text {
+    color: white;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+}
+
+.timer-display {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.timer-seconds {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+}
+
+/* Поздравительное сообщение */
+.congratulations {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.congrats-content h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.congrats-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.hotel-signature {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #3498db;
+    font-weight: 600;
+}
+
+.signature-icon {
+    font-size: 1.2rem;
+}
+
+/* Анимации */
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+}
+
+@keyframes icon-bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(1.1);
+    }
+    60% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes glow-pulse {
+    0%, 100% {
+        opacity: 0.6;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.9;
+        transform: scale(1.05);
+    }
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .success-title {
+        font-size: 2.2rem;
+    }
+    
+    .booking-card {
+        padding: 1.5rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn-primary, .btn-secondary, .btn-download {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .card-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+// Создание конфетти
+function createConfetti() {
+    const container = document.getElementById('confetti');
+    const colors = ['#ffd700', '#ff6b6b', '#48dbfb', '#1dd1a1', '#f368e0', '#ff9ff3'];
+    
+    for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDelay = Math.random() * 5 + 's';
+        confetti.style.animationDuration = (Math.random() * 3 + 3) + 's';
+        confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+        container.appendChild(confetti);
+    }
+}
+
+// Обратный отсчет
+function startCountdown() {
+    let countdown = 30;
+    const timerElement = document.getElementById('countdown');
+    
+    const countdownInterval = setInterval(() => {
+        countdown--;
+        timerElement.textContent = countdown;
+        
+        if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            window.location.href = '/';
+        }
+    }, 1000);
+}
+
+// Скачивание подтверждения (заглушка)
+function downloadConfirmation() {
+    // Здесь можно добавить генерацию PDF
+    alert('Функсияи боргирии тасдиқ ба зудӣ дастрас хоҳад шуд!');
+    
+    // Временная реализация - создаем простой текстовый файл
+    const confirmationText = `
+Брон тасдиқ шуд!
+Рақами брон: #{{ booking.id }}
+Меҳмон: {{ booking.guest_name }}
+Ҳуҷра: {{ booking.room_number }} ({{ booking.room_type }})
+Санаҳо: {{ booking.check_in }} - {{ booking.check_out }}
+Нарх: {{ booking.total_price }} сом.
+
+Меҳмонхонаи СУГДОТЕЛ
+Телефон: +7 (495) 123-45-67
+    `.trim();
+    
+    const blob = new Blob([confirmationText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `booking_{{ booking.id }}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
+// Анимация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    createConfetti();
+    startCountdown();
+    
+    // Добавляем дополнительные анимации для элементов
+    const elements = document.querySelectorAll('[data-aos]');
+    elements.forEach((element, index) => {
+        element.style.animationDelay = `${index * 100}ms`;
+    });
+    
+    // Праздничный звук (опционально)
+    // const audio = new Audio('/static/sounds/success.mp3');
+    // audio.volume = 0.3;
+    // audio.play().catch(() => {}); // Игнорируем ошибки если звук недоступен
+});
+
+// Эффект печатной машинки для заголовка
+function typeWriterEffect() {
+    const title = document.querySelector('.success-title');
+    const text = title.textContent;
+    title.textContent = '';
+    
+    let i = 0;
+    const typing = setInterval(() => {
+        if (i < text.length) {
+            title.textContent += text.charAt(i);
+            i++;
+        } else {
+            clearInterval(typing);
+        }
+    }, 100);
+}
+
+// Запускаем эффект печатной машинки при загрузке
+window.addEventListener('load', typeWriterEffect);
+</script>
+{% endblock %}

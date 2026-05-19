@@ -1,0 +1,631 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.navbar {
+    background: #2c3e50;
+    color: white;
+    padding: 1rem 0;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.nav-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: #3498db;
+}
+
+/* Мобильная нижняя навигация */
+.mobile-bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    z-index: 1000;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+    flex: 1;
+    padding: 8px 0;
+    transition: color 0.3s;
+}
+
+.nav-item.active {
+    color: #3498db;
+}
+
+.nav-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.nav-label {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/static/images/hotel-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.cta-button {
+    display: inline-block;
+    background: #e74c3c;
+    color: white;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+    transition: background 0.3s;
+}
+
+.cta-button:hover {
+    background: #c0392b;
+}
+
+.rooms-preview {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.rooms-preview h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.room-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+}
+
+.room-card h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.book-button {
+    display: inline-block;
+    background: #3498db;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 1rem;
+    transition: background 0.3s;
+}
+
+.book-button:hover {
+    background: #2980b9;
+}
+
+.booking-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.room-details {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+.booking-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.submit-btn {
+    background: #27ae60;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background: #219a52;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.admin-sections {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+}
+
+.add-room form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.add-room input,
+.add-room textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.add-room button {
+    background: #3498db;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.add-room button:hover {
+    background: #2980b9;
+}
+
+.booking-item {
+    background: white;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-btn {
+    background: #e74c3c;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background: #c0392b;
+}
+
+footer {
+    background: #34495e;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    margin-top: 0;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    /* Показываем мобильную навигацию и скрываем десктопную */
+    .mobile-bottom-nav {
+        display: block;
+    }
+    
+    .navbar {
+        display: none;
+    }
+    
+    /* Добавляем отступ снизу для основного контента */
+    main {
+        padding-bottom: 0px;
+    }
+    
+    /* Адаптируем футер */
+    footer {
+        margin-bottom: 0px;
+    }
+    
+    /* Адаптация AI чата для мобильных */
+    #aiChatWidget {
+        bottom: 80px;
+        right: 15px;
+    }
+    
+    #chatWindow {
+        width: calc(100vw - 30px);
+        max-width: 400px;
+        height: 60vh;
+    }
+    
+    /* Остальные адаптации из вашего CSS */
+    .admin-sections {
+        grid-template-columns: 1fr;
+    }
+    
+    .nav-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    
+    .hero {
+        height: 50vh;
+    }
+    
+    .rooms-preview {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    .rooms-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .booking-container {
+        padding: 0 1rem;
+        margin: 1rem auto;
+    }
+    
+    .room-details,
+    .booking-form {
+        padding: 1.5rem;
+    }
+    
+    /* Адаптация для очень маленьких экранов */
+    @media (max-width: 360px) {
+        .nav-label {
+            font-size: 10px;
+        }
+        
+        .nav-icon {
+            font-size: 18px;
+        }
+        
+        .hero-content h1 {
+            font-size: 1.8rem;
+        }
+    }
+    
+    /* Улучшение touch-интерфейса для мобильных */
+    button, a, input, select {
+        min-height: 44px;
+    }
+    
+    .form-group input {
+        font-size: 16px; /* Предотвращает zoom в iOS */
+    }
+    
+    /* Скрываем административные ссылки в мобильной версии */
+    a[href*="/admin"] {
+        display: none !important;
+    }
+}
+
+/* Стили для AI чат-виджета */
+#aiChatWidget {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    font-family: 'Arial', sans-serif;
+}
+
+#chatWindow {
+    display: none;
+    width: 380px;
+    height: 500px;
+    background: white;
+    border: 2px solid #3498db;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+#chatToggle {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#chatToggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.6);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Исправление отступов для страницы "О нас" */
+.about-container {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+.story-section,
+.values-section,
+.services-section,
+.gallery-section,
+.awards-section,
+.team-section,
+.contact-section {
+    width: 100%;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Мобильная версия чата в навигации */
+.chat-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #666;
+    flex: 1;
+    padding: 8px 0;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+
+.chat-nav-item.active {
+    color: #3498db;
+}
+
+/* Страница чата для мобильной версии */
+.chat-page {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    z-index: 10000;
+    flex-direction: column;
+}
+
+.chat-page.active {
+    display: flex;
+}
+
+.chat-header {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.close-chat {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background: #f8f9fa;
+}
+
+.chat-input-container {
+    padding: 15px;
+    border-top: 1px solid #e9ecef;
+    background: white;
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    font-size: 14px;
+}
+
+.send-chat-btn {
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+    /* Скрываем плавающий чат на мобильных */
+    #aiChatWidget {
+        display: none !important;
+    }
+    
+    /* Показываем чат в навигации */
+    .mobile-bottom-nav .nav-items {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Убедимся, что контейнеры не создают горизонтальный скролл */
+    .about-container .container,
+    .rooms-container .container,
+    .home-container .container {
+        max-width: 100%;
+        padding: 0 15px;
+        margin: 0 auto;
+    }
+    
+    /* Исправление для hero секций */
+    .hero-section,
+    .rooms-hero {
+        width: 100%;
+        overflow: hidden;
+    }
+    
+    .hero-content,
+    .hero-text {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Для десктопной версии - скрываем мобильный чат */
+@media (min-width: 769px) {
+    .chat-page {
+        display: none !important;
+    }
+    
+    .mobile-bottom-nav {
+        display: none !important;
+    }
+}
+

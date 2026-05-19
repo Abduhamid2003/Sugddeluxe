@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация - СУГДОТЕЛ</title>
+    <style>
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3498db;
+            --primary-dark: #2980b9;
+            --secondary: #2c3e50;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --gray: #95a5a6;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Навигация */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        .nav-logo span {
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Основной контент */
+        .container {
+            max-width: 1200px;
+            margin: 80px auto 0;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Боковая навигация */
+        .sidebar {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: var(--secondary);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: var(--light);
+            border-left-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .sidebar-nav .submenu {
+            list-style: none;
+            margin-left: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .sidebar-nav .submenu a {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Основной контент документации */
+        .content {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 100px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section h2 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+            font-size: 2rem;
+        }
+
+        .section h3 {
+            color: var(--primary);
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+
+        .section h4 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .section p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .section ul, .section ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        .section li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        /* Карточки */
+        .card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+        }
+
+        .card.warning {
+            border-left-color: var(--warning);
+            background: #fffbf0;
+        }
+
+        .card.danger {
+            border-left-color: var(--danger);
+            background: #fdf2f2;
+        }
+
+        .card.success {
+            border-left-color: var(--success);
+            background: #f0f9f4;
+        }
+
+        /* Код */
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-block .comment {
+            color: #718096;
+        }
+
+        .code-block .keyword {
+            color: #ff79c6;
+        }
+
+        .code-block .string {
+            color: #50fa7b;
+        }
+
+        .code-block .function {
+            color: #8be9fd;
+        }
+
+        /* Таблицы */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .table th,
+        .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tr:hover {
+            background: var(--light);
+        }
+
+        /* Иконки */
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #1a252f;
+        }
+
+        /* Мобильная навигация */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        /* Адаптивность */
+        @media (max-width: 968px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .nav-menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .content {
+                padding: 2rem 1.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Прогресс бар */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary);
+            z-index: 1001;
+            transition: width 0.3s ease;
+        }
+
+        /* Подсветка кода */
+        .code-inline {
+            background: #f7fafc;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--danger);
+            border: 1px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Прогресс бар -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">📚 <span>СУГДОТЕЛ</span> Документация</a>
+            
+            <button class="mobile-nav-toggle" id="mobileNavToggle">☰</button>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#overview" class="active">Обзор</a></li>
+                <li><a href="#installation">Установка</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#mobile-app">Мобильное приложение</a></li>
+                <li><a href="#deployment">Деплой</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <!-- Боковая навигация -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="#overview" class="active">📋 Обзор системы</a></li>
+                    <li><a href="#features">⭐ Основные функции</a></li>
+                    <li><a href="#architecture">🏗️ Архитектура</a></li>
+                    
+                    <li><a href="#installation">🚀 Установка</a>
+                        <ul class="submenu">
+                            <li><a href="#requirements">Требования</a></li>
+                            <li><a href="#backend-setup">Бэкенд</a></li>
+                            <li><a href="#frontend-setup">Фронтенд</a></li>
+                            <li><a href="#mobile-setup">Мобильное приложение</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#api">🔌 API Документация</a>
+                        <ul class="submenu">
+                            <li><a href="#auth-api">Аутентификация</a></li>
+                            <li><a href="#rooms-api">Комнаты</a></li>
+                            <li><a href="#bookings-api">Бронирования</a></li>
+                            <li><a href="#ai-api">AI Ассистент</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#mobile-app">📱 Мобильное приложение</a>
+                        <ul class="submenu">
+                            <li><a href="#android-setup">Android</a></li>
+                            <li><a href="#features-mobile">Функции</a></li>
+                            <li><a href="#build">Сборка</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#deployment">🌐 Деплой</a>
+                        <ul class="submenu">
+                            <li><a href="#server-setup">Сервер</a></li>
+                            <li><a href="#ssl">SSL сертификат</a></li>
+                            <li><a href="#monitoring">Мониторинг</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li><a href="#troubleshooting">🔧 Решение проблем</a></li>
+                    <li><a href="#support">💬 Поддержка</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="content">
+            <!-- Обзор системы -->
+            <section id="overview" class="section fade-in">
+                <h2>📋 Обзор системы "СУГДОТЕЛ"</h2>
+                <p><strong>СУГДОТЕЛ</strong> - это современная система управления отелем с веб-интерфейсом, мобильным приложением и AI-ассистентом. Система предоставляет полный цикл услуг: от бронирования номеров до управления бронированиями и взаимодействия с гостями.</p>
+                
+                <div class="card success">
+                    <h4>🎯 Ключевые преимущества</h4>
+                    <ul>
+                        <li>🤖 Умный AI-ассистент на базе DeepSeek</li>
+                        <li>📱 Нативное мобильное приложение на Kotlin</li>
+                        <li>⚡ Быстрый веб-интерфейс на FastAPI</li>
+                        <li>📧 Автоматические email уведомления</li>
+                        <li>🔐 Безопасная аутентификация</li>
+                        <li>📊 Панель управления для администраторов</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Основные функции -->
+            <section id="features" class="section">
+                <h2>⭐ Основные функции</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🏨</div>
+                        <h3>Управление номерами</h3>
+                        <p>Добавление, редактирование и управление номерами отеля с фотографиями и описаниями</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📅</div>
+                        <h3>Система бронирования</h3>
+                        <p>Онлайн бронирование с выбором дат, расчетом стоимости и подтверждением</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Ассистент</h3>
+                        <p>Умный чат-бот для помощи гостям и автоматизации обслуживания</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📧</div>
+                        <h3>Email уведомления</h3>
+                        <p>Автоматическая отправка писем о бронированиях и отменах</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <h3>Мобильное приложение</h3>
+                        <p>Нативное Android приложение для удобного доступа</p>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">⚙️</div>
+                        <h3>Панель администратора</h3>
+                        <p>Полный контроль над бронированиями, номерами и настройками</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Архитектура -->
+            <section id="architecture" class="section">
+                <h2>🏗️ Архитектура системы</h2>
+                
+                <div class="card">
+                    <h4>🔧 Технологический стек</h4>
+                    <div class="table-container">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Компонент</th>
+                                    <th>Технологии</th>
+                                    <th>Описание</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Бэкенд</strong></td>
+                                    <td>Python, FastAPI, SQLite</td>
+                                    <td>API сервер с WebSocket поддержкой</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Фронтенд</strong></td>
+                                    <td>HTML, CSS, JavaScript</td>
+                                    <td>Адаптивный веб-интерфейс</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Мобильное приложение</strong></td>
+                                    <td>Kotlin, Android Studio</td>
+                                    <td>Нативное Android приложение</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>AI Ассистент</strong></td>
+                                    <td>DeepSeek API</td>
+                                    <td>Умный чат-бот для поддержки</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>База данных</strong></td>
+                                    <td>SQLite</td>
+                                    <td>Локальная база данных</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email</strong></td>
+                                    <td>SMTP (Gmail)</td>
+                                    <td>Отправка уведомлений</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>📐 Схема работы</h3>
+                <div class="code-block">
+// Основные компоненты системы
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│   Веб-клиент    │◄──►│   FastAPI Server  │◄──►│  SQLite Database │
+│   (HTML/CSS/JS) │    │   (Python)       │    │                 │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+         │                       │                       │
+         │                       │                       │
+         ▼                       ▼                       ▼
+┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
+│ Мобильное прил. │    │   DeepSeek AI    │    │   SMTP Server   │
+│   (Kotlin)      │    │     (API)        │    │   (Email)       │
+└─────────────────┘    └──────────────────┘    └─────────────────┘
+                </div>
+            </section>
+
+            <!-- Установка -->
+            <section id="installation" class="section">
+                <h2>🚀 Установка и настройка</h2>
+
+                <div id="requirements" class="subsection">
+                    <h3>📋 Системные требования</h3>
+                    <div class="card">
+                        <h4>Минимальные требования</h4>
+                        <ul>
+                            <li><strong>ОС:</strong> Windows 10, macOS 10.14+, Ubuntu 18.04+</li>
+                            <li><strong>Python:</strong> 3.8+</li>
+                            <li><strong>Память:</strong> 2GB RAM</li>
+                            <li><strong>Место на диске:</strong> 500MB</li>
+                            <li><strong>Интернет:</strong> Для работы AI ассистента и email</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="backend-setup" class="subsection">
+                    <h3>⚙️ Настройка бэкенда (FastAPI)</h3>
+                    
+                    <div class="card">
+                        <h4>1. Клонирование репозитория</h4>
+                        <div class="code-block">
+<span class="comment"># Клонируйте проект</span>
+git clone https://github.com/your-username/sugdhotel.git
+cd sugdhotel
+
+<span class="comment"># Создайте виртуальное окружение</span>
+python -m venv venv
+source venv/bin/activate  <span class="comment"># Linux/Mac</span>
+<span class="comment"># venv\Scripts\activate  # Windows</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4>2. Установка зависимостей</h4>
+                        <div class="code-block">
+<span class="comment"># Установите необходимые пакеты</span>
+pip install fastapi uvicorn python-multipart
+pip install sqlite3 requests jinja2
+
+<span class="comment"># Или используйте requirements.txt</span>
+pip install -r requirements.txt
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4>3. Настройка конфигурации</h4>
+                        <div class="code-block">
+<span class="comment"># В файле main.py укажите ваши настройки:</span>
+
+<span class="comment"># DeepSeek API ключ</span>
+DEEPSEEK_API_KEY = <span class="string">"sk-your-api-key-here"</span>
+
+<span class="comment"># Email настройки</span>
+EMAIL_ADDRESS = <span class="string">"your-email@gmail.com"</span>
+EMAIL_PASSWORD = <span class="string">"your-app-password"</span>
+
+<span class="comment"># Запуск сервера</span>
+uvicorn.run(app, host=<span class="string">"0.0.0.0"</span>, port=8000)
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4>4. Запуск сервера</h4>
+                        <div class="code-block">
+<span class="comment"># Запустите сервер</span>
+python main.py
+
+<span class="comment"># Или используйте uvicorn напрямую</span>
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+                        </div>
+                        <p>Сервер будет доступен по адресу: <code class="code-inline">http://localhost:8000</code></p>
+                    </div>
+                </div>
+
+                <div id="frontend-setup" class="subsection">
+                    <h3>🎨 Настройка фронтенда</h3>
+                    <p>Фронтенд уже включен в бэкенд и обслуживается FastAPI. Дополнительная настройка не требуется.</p>
+                    
+                    <div class="card warning">
+                        <h4>⚠️ Важные замечания</h4>
+                        <ul>
+                            <li>Убедитесь, что статические файлы находятся в папке <code class="code-inline">static/</code></li>
+                            <li>Шаблоны должны быть в папке <code class="code-inline">templates/</code></li>
+                            <li>Для production используйте <code class="code-inline">--reload</code> только в development</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Документация -->
+            <section id="api" class="section">
+                <h2>🔌 API Документация</h2>
+
+                <div id="auth-api" class="subsection">
+                    <h3>🔐 Аутентификация</h3>
+                    
+                    <div class="card">
+                        <h4>POST /admin/login</h4>
+                        <p><strong>Описание:</strong> Вход в админ-панель</p>
+                        
+                        <div class="code-block">
+<span class="comment">// Request Body</span>
+{
+  <span class="string">"username"</span>: <span class="string">"admin"</span>,
+  <span class="string">"password"</span>: <span class="string">"admin123"</span>
+}
+
+<span class="comment">// Response</span>
+{
+  <span class="string">"status"</span>: <span class="string">"success"</span>,
+  <span class="string">"redirect"</span>: <span class="string">"/admin"</span>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="rooms-api" class="subsection">
+                    <h3>🏨 API Комнат</h3>
+                    
+                    <div class="card">
+                        <h4>GET /api/partner/rooms</h4>
+                        <p><strong>Описание:</strong> Получить список всех комнат</p>
+                        
+                        <div class="code-block">
+<span class="comment">// Headers</span>
+Authorization: Bearer your-api-key
+
+<span class="comment">// Response</span>
+{
+  <span class="string">"status"</span>: <span class="string">"success"</span>,
+  <span class="string">"rooms"</span>: [
+    {
+      <span class="string">"id"</span>: 1,
+      <span class="string">"number"</span>: <span class="string">"101"</span>,
+      <span class="string">"type"</span>: <span class="string">"Стандарт"</span>,
+      <span class="string">"price"</span>: 2500,
+      <span class="string">"capacity"</span>: 2
+    }
+  ]
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bookings-api" class="subsection">
+                    <h3>📅 API Бронирований</h3>
+                    
+                    <div class="card">
+                        <h4>POST /book</h4>
+                        <p><strong>Описание:</strong> Создать новое бронирование</p>
+                        
+                        <div class="code-block">
+<span class="comment">// Request Body (FormData)</span>
+room_id: 1
+guest_name: "Иван Иванов"
+guest_email: "ivan@example.com"
+guest_phone: "+992123456789"
+check_in: "2024-01-15"
+check_out: "2024-01-20"
+
+<span class="comment">// Response</span>
+Redirect to /booking-success/{booking_id}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4>POST /api/cancel-booking</h4>
+                        <p><strong>Описание:</strong> Отменить бронирование</p>
+                        
+                        <div class="code-block">
+<span class="comment">// Request Body (FormData)</span>
+booking_id: 123
+email: "ivan@example.com"
+
+<span class="comment">// Response</span>
+{
+  <span class="string">"status"</span>: <span class="string">"success"</span>,
+  <span class="string">"message"</span>: <span class="string">"Бронирование отменено"</span>
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ai-api" class="subsection">
+                    <h3>🤖 AI Ассистент API</h3>
+                    
+                    <div class="card">
+                        <h4>WebSocket /ws/chat</h4>
+                        <p><strong>Описание:</strong> WebSocket соединение для AI чата</p>
+                        
+                        <div class="code-block">
+<span class="comment">// Подключение</span>
+const ws = new WebSocket('ws://localhost:8000/ws/chat');
+
+<span class="comment">// Отправка сообщения</span>
+ws.send(JSON.stringify({
+  message: "Привет",
+  email: "user@example.com"
+}));
+
+<span class="comment">// Получение ответа</span>
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  console.log(data);
+};
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Мобильное приложение -->
+            <section id="mobile-app" class="section">
+                <h2>📱 Мобильное приложение</h2>
+
+                <div id="android-setup" class="subsection">
+                    <h3>🤖 Настройка Android приложения</h3>
+                    
+                    <div class="card">
+                        <h4>1. Требования</h4>
+                        <ul>
+                            <li>Android Studio Arctic Fox или новее</li>
+                            <li>Android SDK 21+ (Android 5.0)</li>
+                            <li>Kotlin 1.5+</li>
+                            <li>JDK 11+</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>2. Создание проекта</h4>
+                        <div class="code-block">
+<span class="comment">// app/build.gradle.kts</span>
+plugins {
+    id(<span class="string">"com.android.application"</span>)
+    id(<span class="string">"org.jetbrains.kotlin.android"</span>)
+}
+
+android {
+    compileSdk = <span class="number">34</span>
+    
+    defaultConfig {
+        applicationId = <span class="string">"com.sugddelux.app"</span>
+        minSdk = <span class="number">21</span>
+        targetSdk = <span class="number">34</span>
+    }
+}
+
+dependencies {
+    implementation(<span class="string">"androidx.appcompat:appcompat:1.6.1"</span>)
+    implementation(<span class="string">"androidx.webkit:webkit:1.8.0"</span>)
+}
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4>3. Настройка AndroidManifest.xml</h4>
+                        <div class="code-block">
+<span class="comment">&lt;!-- Разрешения --&gt;</span>
+&lt;uses-permission android:name=<span class="string">"android.permission.INTERNET"</span> /&gt;
+&lt;uses-permission android:name=<span class="string">"android.permission.ACCESS_NETWORK_STATE"</span> /&gt;
+
+<span class="comment">&lt;!-- Настройка сети для HTTP --&gt;</span>
+&lt;application
+    android:networkSecurityConfig=<span class="string">"@xml/network_security_config"</span>
+    android:usesCleartextTraffic=<span class="string">"true"</span>&gt;
+    
+    &lt;activity android:name=<span class="string">".MainActivity"</span>&gt;
+        &lt;intent-filter&gt;
+            &lt;action android:name=<span class="string">"android.intent.action.MAIN"</span> /&gt;
+            &lt;category android:name=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;
+        &lt;/intent-filter&gt;
+    &lt;/activity&gt;
+&lt;/application&gt;
+                        </div>
+                    </div>
+                </div>
+
+                <div id="features-mobile" class="subsection">
+                    <h3>📲 Функции мобильного приложения</h3>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">🌐</div>
+                            <h4>WebView</h4>
+                            <p>Встроенный браузер для загрузки веб-приложения</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">⚙️</div>
+                            <h4>Настройки сервера</h4>
+                            <p>Возможность смены URL сервера</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">📧</div>
+                            <h4>Email в чате</h4>
+                            <p>Форма для ввода email в AI чате</p>
+                        </div>
+                        
+                        <div class="feature-item">
+                            <div class="feature-icon">🔙</div>
+                            <h4>Навигация "Назад"</h4>
+                            <p>Поддержка жестовой навигации</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="build" class="subsection">
+                    <h3>🔨 Сборка приложения</h3>
+                    
+                    <div class="card">
+                        <h4>Сборка APK</h4>
+                        <div class="code-block">
+<span class="comment"># В Android Studio:</span>
+1. Build → Generate Signed Bundle / APK
+2. Выберите APK
+3. Создайте ключ подписи (если впервые)
+4. Выберите release build variant
+5. Дождитесь завершения сборки
+
+<span class="comment"># Или через командную строку:</span>
+./gradlew assembleRelease
+                        </div>
+                    </div>
+
+                    <div class="card warning">
+                        <h4>⚠️ Важные замечания</h4>
+                        <ul>
+                            <li>Сохраните ключ подписи в безопасном месте</li>
+                            <li>Для Google Play требуется App Bundle</li>
+                            <li>Протестируйте приложение на разных устройствах</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Деплой -->
+            <section id="deployment" class="section">
+                <h2>🌐 Деплой на сервер</h2>
+
+                <div id="server-setup" class="subsection">
+                    <h3>🖥️ Настройка сервера</h3>
+                    
+                    <div class="card">
+                        <h4>1. Подготовка сервера (Ubuntu)</h4>
+                        <div class="code-block">
+<span class="comment"># Обновление системы</span>
+sudo apt update && sudo apt upgrade -y
+
+<span class="comment"># Установка Python</span>
+sudo apt install python3 python3-pip python3-venv -y
+
+<span class="comment"># Установка Nginx</span>
+sudo apt install nginx -y
+
+<span class="comment"># Настройка фаервола</span>
+sudo ufw allow 22
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw enable
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4>2. Деплой приложения</h4>
+                        <div class="code-block">
+<span class="comment"># Клонирование проекта</span>
+git clone https://github.com/your-username/sugdhotel.git
+cd sugdhotel
+
+<span class="comment"># Настройка виртуального окружения</span>
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+<span class="comment"># Запуск через systemd</span>
+sudo nano /etc/systemd/system/sugdhotel.service
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4>3. Systemd сервис</h4>
+                        <div class="code-block">
+<span class="comment"># /etc/systemd/system/sugdhotel.service</span>
+[Unit]
+Description=Sugdhotel FastAPI Application
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/path/to/sugdhotel
+Environment=PYTHONPATH=/path/to/sugdhotel
+ExecStart=/path/to/sugdhotel/venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+                        </div>
+                    </div>
+                </div>
+
+                <div id="ssl" class="subsection">
+                    <h3>🔒 SSL сертификат (Let's Encrypt)</h3>
+                    
+                    <div class="card">
+                        <h4>Установка Certbot</h4>
+                        <div class="code-block">
+<span class="comment"># Установка Certbot</span>
+sudo apt install certbot python3-certbot-nginx -y
+
+<span class="comment"># Получение сертификата</span>
+sudo certbot --nginx -d your-domain.com
+
+<span class="comment"># Автоматическое обновление</span>
+sudo crontab -e
+<span class="comment"># Добавьте строку:</span>
+0 12 * * * /usr/bin/certbot renew --quiet
+                        </div>
+                    </div>
+                </div>
+
+                <div id="monitoring" class="subsection">
+                    <h3>📊 Мониторинг и логи</h3>
+                    
+                    <div class="card">
+                        <h4>Просмотр логов</h4>
+                        <div class="code-block">
+<span class="comment"># Логи приложения</span>
+sudo journalctl -u sugdhotel.service -f
+
+<span class="comment"># Логи Nginx</span>
+sudo tail -f /var/log/nginx/access.log
+sudo tail -f /var/log/nginx/error.log
+
+<span class="comment"># Проверка статуса сервисов</span>
+sudo systemctl status sugdhotel.service
+sudo systemctl status nginx
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Решение проблем -->
+            <section id="troubleshooting" class="section">
+                <h2>🔧 Решение проблем</h2>
+
+                <div class="card danger">
+                    <h4>❌ Проблема: Сервер не запускается</h4>
+                    <p><strong>Решение:</strong></p>
+                    <ul>
+                        <li>Проверьте, что порт 8000 не занят: <code class="code-inline">netstat -tulpn | grep 8000</code></li>
+                        <li>Убедитесь, что все зависимости установлены</li>
+                        <li>Проверьте логи: <code class="code-inline">python main.py</code></li>
+                    </ul>
+                </div>
+
+                <div class="card warning">
+                    <h4>⚠️ Проблема: WebSocket не работает</h4>
+                    <p><strong>Решение:</strong></p>
+                    <ul>
+                        <li>Проверьте URL WebSocket: <code class="code-inline">ws://your-domain.com/ws/chat</code></li>
+                        <li>Убедитесь, что Nginx проксирует WebSocket</li>
+                        <li>Проверьте настройки CORS</li>
+                    </ul>
+                </div>
+
+                <div class="card warning">
+                    <h4>⚠️ Проблема: Email не отправляется</h4>
+                    <p><strong>Решение:</strong></p>
+                    <ul>
+                        <li>Проверьте правильность email и пароля приложения</li>
+                        <li>Для Gmail используйте пароль приложения</li>
+                        <li>Проверьте настройки SMTP сервера</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>🔧 Полезные команды</h4>
+                    <div class="code-block">
+<span class="comment"># Проверка статуса сервисов</span>
+sudo systemctl status sugdhotel
+sudo systemctl status nginx
+
+<span class="comment"># Перезапуск сервисов</span>
+sudo systemctl restart sugdhotel
+sudo systemctl restart nginx
+
+<span class="comment"># Просмотр логов в реальном времени</span>
+sudo journalctl -u sugdhotel -f
+sudo tail -f /var/log/nginx/error.log
+
+<span class="comment"># Проверка сетевых соединений</span>
+netstat -tulpn
+ss -tulpn
+                        </div>
+                </div>
+            </section>
+
+            <!-- Поддержка -->
+            <section id="support" class="section">
+                <h2>💬 Поддержка и контакты</h2>
+                
+                <div class="card success">
+                    <h4>📞 Контакты для поддержки</h4>
+                    <ul>
+                        <li><strong>Email:</strong> support@sugdhotel.tj</li>
+                        <li><strong>Телефон:</strong> +992 123 45 67 89</li>
+                        <li><strong>Telegram:</strong> @sugdhotel_support</li>
+                        <li><strong>GitHub:</strong> github.com/your-username/sugdhotel</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h4>🐛 Сообщение о проблемах</h4>
+                    <p>При возникновении проблем создайте issue на GitHub с следующей информацией:</p>
+                    <ul>
+                        <li>Описание проблемы</li>
+                        <li>Шаги для воспроизведения</li>
+                        <li>Ожидаемое поведение</li>
+                        <li>Фактическое поведение</li>
+                        <li>Логи и скриншоты</li>
+                        <li>Версия приложения и ОС</li>
+                    </ul>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <h4>Документация</h4>
+                        <p>Полная документация доступна на GitHub Wiki</p>
+                        <a href="#" class="btn">Перейти к Wiki</a>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">🎥</div>
+                        <h4>Видео-гайд</h4>
+                        <p>Видео инструкции по установке и настройке</p>
+                        <a href="#" class="btn">Смотреть видео</a>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">👥</div>
+                        <h4>Сообщество</h4>
+                        <p>Присоединяйтесь к нашему Telegram чату</p>
+                        <a href="#" class="btn">Присоединиться</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Прогресс бар
+        window.addEventListener('scroll', function() {
+            const winHeight = window.innerHeight;
+            const docHeight = document.documentElement.scrollHeight;
+            const scrollTop = window.pageYOffset;
+            const scrollPercent = (scrollTop) / (docHeight - winHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Активное состояние навигации
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.sidebar-nav a, .nav-menu a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Мобильное меню
+        document.getElementById('mobileNavToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('active');
+        });
+
+        // Закрытие мобильного меню при клике на ссылку
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });
+
+        // Анимация появления элементов при скролле
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Подсветка кода
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('.code-block');
+            codeBlocks.forEach(block => {
+                const code = block.textContent;
+                const highlighted = code
+                    .replace(/\/\/.*$/gm, '<span class="comment">$&</span>')
+                    .replace(/(\"[^\"]*\")/g, '<span class="string">$1</span>')
+                    .replace(/\b(function|const|let|var|if|else|return|class)\b/g, '<span class="keyword">$1</span>')
+                    .replace(/\b(console\.log|JSON\.parse|WebSocket)\b/g, '<span class="function">$1</span>');
+                block.innerHTML = highlighted;
+            });
+        });
+    </script>
+</body>
+</html>

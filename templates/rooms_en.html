@@ -1,0 +1,760 @@
+{% extends "base.html" %}
+
+{% set room_types = {
+    'Стандарт': 'Standard',
+    'Боҳашамат': 'Luxury',
+    'Оилавӣ': 'Family',
+    'Олӣ': 'Premium'
+} %}
+
+{% block content %}
+<div class="rooms-container">
+    <!-- Hero section -->
+    <section class="rooms-hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title" data-aos="fade-up">Our <span class="highlight">Rooms</span></h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">Comfort and coziness in every corner</p>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="400">
+                <div class="stat">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-label">Rooms</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-count="5">0</div>
+                    <div class="stat-label">Types</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" data-count="98">0</div>
+                    <div class="stat-label">% Satisfied</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-card" data-aos="fade-up">
+                <h3>🔍 Choose the perfect room</h3>
+                <div class="filters-grid">
+                    <div class="filter-group">
+                        <label>Type:</label>
+                        <select id="typeFilter" class="filter-select">
+                            <option value="all">All rooms</option>
+                            <option value="Стандарт">Standard</option>
+                            <option value="Люкс">Luxury</option>
+                            <option value="Семейный">Family</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Price up to:</label>
+                        <input type="range" id="priceFilter" min="1000" max="10000" step="500" value="10000" class="filter-slider">
+                        <span id="priceValue">10000 somoni</span>
+                    </div>
+                    <div class="filter-group">
+                        <label>Number of guests:</label>
+                        <select id="capacityFilter" class="filter-select">
+                            <option value="0">Any</option>
+                            <option value="1">1 guest</option>
+                            <option value="2">2 guests</option>
+                            <option value="3">3 guests</option>
+                            <option value="4">4 or more</option>
+                        </select>
+                    </div>
+                    <button class="filter-btn" onclick="applyFilters()">Apply</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rooms grid -->
+    <section class="rooms-grid-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Available <span class="highlight">Rooms</span></h2>
+                <p>Choose your dream room</p>
+            </div>
+
+            <div class="rooms-masonry" id="roomsGrid">
+                {% for item in rooms_with_occupancy %}
+                <div class="room-card" data-aos="zoom-in" data-type="{{ item.room.type }}" data-price="{{ item.room.price }}" data-capacity="{{ item.room.capacity }}">
+                    <div class="room-card-inner">
+                        <div class="room-image">
+                            <img src="{{ item.room.image_url }}" alt="Room {{ item.room.number }}" 
+                                 onerror="this.src='/static/images/room-default.jpg'">
+                            <div class="room-overlay">
+                                <div class="room-badges">
+                                    {% if item.is_occupied %}
+                                    <span class="badge occupied">🔴 Occupied</span>
+                                    {% else %}
+                                    <span class="badge available">🟢 Available</span>
+                                    {% endif %}
+                                    <span class="badge type">{{ room_types[item.room.type] }}</span>
+                                </div>
+                                <div class="room-actions">
+                                    <button class="btn-quick-view" data-room-id="{{ item.room.id }}">
+                                        👁️ Quick view
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="room-content">
+                            <div class="room-header">
+                                <h3 class="room-title">Room №{{ item.room.number }}</h3>
+                                <div class="room-price">
+                                    <span class="price">{{ item.room.price }}</span>
+                                    <span class="currency">somoni / night</span>
+                                </div>
+                            </div>
+                            
+                            <div class="room-features">
+                                <div class="feature">
+                                    <span class="feature-icon">👥</span>
+                                    <span>{{ item.room.capacity }} guests</span>
+                                </div>
+                                <div class="feature">
+                                    <span class="feature-icon">🛏️</span>
+                                    <span>King bed</span>
+                                </div>
+                                <div class="feature">
+                                    <span class="feature-icon">📏</span>
+                                    <span>30 m²</span>
+                                </div>
+                            </div>
+                            
+                            <!-- DESCRIPTION IN ENGLISH -->
+                            <p class="room-description">
+                                {% set desc = item.room.description_en or item.room.description %}
+                                {% if desc %}
+                                    {{ desc }}
+                                {% else %}
+                                    {% if item.room.type == 'Стандарт' %}
+                                        Cozy standard room with modern furniture and private bathroom. Perfect for a comfortable stay.
+                                    {% elif item.room.type == 'Люкс' %}
+                                        Spacious luxury suite with living area, panoramic windows and bathroom with jacuzzi.
+                                    {% elif item.room.type == 'Семейный' %}
+                                        Family room with two bedrooms, perfect for staying with children.
+                                    {% else %}
+                                        Comfortable room with modern renovation and everything you need for a pleasant stay.
+                                    {% endif %}
+                                {% endif %}
+                            </p>
+                            
+                            <div class="room-footer">
+                                <div class="room-status">
+                                    {% if item.is_occupied %}
+                                    <div class="status-indicator busy">
+                                        <div class="pulse"></div>
+                                        Occupied until tomorrow
+                                    </div>
+                                    {% else %}
+                                    <div class="status-indicator available">
+                                        ✅ Available for check-in
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="room-buttons">
+                                    {% if not item.is_occupied %}
+                                    <a href="/booking/{{ item.room.id }}?lang=en" class="btn-book-now">
+                                        Book Now
+                                        <span class="btn-sparkle">✨</span>
+                                    </a>
+                                    {% else %}
+                                    <button class="btn-book-now disabled" disabled>
+                                        Not Available
+                                    </button>
+                                    {% endif %}
+                                    <button class="btn-details" data-room-id="{{ item.room.id }}">
+                                        Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- No rooms message -->
+            <div class="no-rooms-message" id="noRoomsMessage" style="display: none;">
+                <div class="empty-state">
+                    <div class="empty-icon">🔍</div>
+                    <h3>No rooms found</h3>
+                    <p>Change filter parameters</p>
+                    <button class="btn-reset-filters" onclick="resetFilters()">Reset filters</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick view modal -->
+    <div id="quickViewModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="quickViewContent"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+.rooms-container {
+    font-family: 'Arial', sans-serif;
+}
+
+.highlight {
+    color: #3498db;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.rooms-hero {
+    height: 80vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.rooms-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/images/rooms-hero-bg.jpg') center/cover;
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.scroll-arrow {
+    width: 30px;
+    height: 30px;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: rotate(45deg) translate(0, 0); }
+    50% { transform: rotate(45deg) translate(-10px, 10px); }
+}
+
+.filters-section {
+    padding: 3rem 0;
+    background: #f8f9fa;
+}
+
+.filters-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.filters-card h3 {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+
+.filters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    align-items: end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filter-select, .filter-slider {
+    padding: 0.8rem;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.filter-select:focus, .filter-slider:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+}
+
+.filter-btn {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52,152,219,0.4);
+}
+
+.rooms-grid-section {
+    padding: 4rem 0;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    font-size: 3rem;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.rooms-masonry {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.room-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.room-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+.room-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.room-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.room-card:hover .room-image img {
+    transform: scale(1.1);
+}
+
+.room-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.8));
+    opacity: 0;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.room-card:hover .room-overlay {
+    opacity: 1;
+}
+
+.room-badges {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.badge.occupied {
+    background: #e74c3c;
+    color: white;
+}
+
+.badge.available {
+    background: #27ae60;
+    color: white;
+}
+
+.badge.type {
+    background: #3498db;
+    color: white;
+}
+
+.btn-quick-view {
+    background: rgba(255,255,255,0.9);
+    color: #333;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-quick-view:hover {
+    background: white;
+    transform: scale(1.05);
+}
+
+.room-content {
+    padding: 1.5rem;
+}
+
+.room-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+}
+
+.room-title {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.room-price {
+    text-align: right;
+}
+
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.currency {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.room-features {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.room-description {
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    min-height: 80px;
+}
+
+.room-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.status-indicator.available {
+    color: #27ae60;
+}
+
+.status-indicator.busy {
+    color: #e74c3c;
+}
+
+.pulse {
+    width: 8px;
+    height: 8px;
+    background: #e74c3c;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.8); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+    100% { transform: scale(0.8); opacity: 1; }
+}
+
+.room-buttons {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.btn-book-now {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-book-now:hover:not(.disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231,76,60,0.4);
+}
+
+.btn-book-now.disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+}
+
+.btn-details {
+    background: transparent;
+    color: #3498db;
+    border: 2px solid #3498db;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-details:hover {
+    background: #3498db;
+    color: white;
+}
+
+.no-rooms-message {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.empty-state {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.btn-reset-filters {
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+}
+
+.modal-content {
+    background: white;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .hero-stats { gap: 2rem; }
+    .stat-number { font-size: 2rem; }
+    .rooms-masonry { grid-template-columns: 1fr; }
+    .filters-grid { grid-template-columns: 1fr; }
+    .room-footer { flex-direction: column; align-items: stretch; }
+    .room-buttons { justify-content: center; }
+}
+</style>
+
+<script>
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        let current = 0;
+        const timer = setInterval(() => {
+            current += Math.ceil(target / 50);
+            if (current >= target) {
+                counter.textContent = target + (counter.getAttribute('data-count') === '98' ? '%' : '+');
+                clearInterval(timer);
+            } else {
+                counter.textContent = current;
+            }
+        }, 40);
+    });
+}
+
+function applyFilters() {
+    const typeFilter = document.getElementById('typeFilter').value;
+    const priceFilter = parseInt(document.getElementById('priceFilter').value);
+    const capacityFilter = parseInt(document.getElementById('capacityFilter').value);
+    
+    const rooms = document.querySelectorAll('.room-card');
+    let visibleCount = 0;
+    
+    rooms.forEach(room => {
+        const roomType = room.getAttribute('data-type');
+        const roomPrice = parseInt(room.getAttribute('data-price'));
+        const roomCapacity = parseInt(room.getAttribute('data-capacity'));
+        
+        const typeMatch = typeFilter === 'all' || roomType === typeFilter;
+        const priceMatch = roomPrice <= priceFilter;
+        const capacityMatch = capacityFilter === 0 || roomCapacity >= capacityFilter;
+        
+        if (typeMatch && priceMatch && capacityMatch) {
+            room.style.display = 'block';
+            visibleCount++;
+        } else {
+            room.style.display = 'none';
+        }
+    });
+    
+    const noRoomsMessage = document.getElementById('noRoomsMessage');
+    if (visibleCount === 0) {
+        noRoomsMessage.style.display = 'block';
+    } else {
+        noRoomsMessage.style.display = 'none';
+    }
+}
+
+function resetFilters() {
+    document.getElementById('typeFilter').value = 'all';
+    document.getElementById('priceFilter').value = 10000;
+    document.getElementById('capacityFilter').value = '0';
+    document.getElementById('priceValue').textContent = '10000 som.';
+    applyFilters();
+}
+
+document.getElementById('priceFilter').addEventListener('input', function() {
+    document.getElementById('priceValue').textContent = this.value + ' som.';
+});
+
+document.querySelectorAll('.btn-quick-view').forEach(btn => {
+    btn.addEventListener('click', () => {
+        alert('Quick room view');
+    });
+});
+
+document.querySelectorAll('.btn-details').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const roomId = e.currentTarget.getAttribute('data-room-id');
+        window.location.href = `/booking/${roomId}?lang=en`;
+    });
+});
+
+document.querySelector('.close-modal')?.addEventListener('click', () => {
+    document.getElementById('quickViewModal').style.display = 'none';
+});
+
+setTimeout(animateCounters, 500);
+</script>
+{% endblock %}
