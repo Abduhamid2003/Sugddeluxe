@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: korolevskie-zhalyuzi
+    name: Sugddeluxe
     runtime: python
     buildCommand: |
       pip install --upgrade pip
