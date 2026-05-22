@@ -948,11 +948,11 @@ def smart_ai_assistant(user_message: str, user_email: str = None):
     # НАРХҲО/ЦЕНЫ/PRICES
     elif check_command(['нарх', 'price', 'цена'], user_message_lower):
         if lang == 'tg':
-            return {"type": "response", "message": "💰 **Нархҳои ҳуҷраҳо:**\n\n• Стандарт: 2500 сом. / шаб\n• Люкс: 4500 сом. / шаб\n• Оилавӣ: 3500 сом. / шаб\n\n💎 Ҳамаи нархҳо бо андоз ва хизматрасонии меҳмонхона дохил мебошанд.", "action": None}
+            return {"type": "response", "message": "💰 **Нархҳои ҳуҷраҳо:**\n\n• Стандарт: 250 сом. / шаб\n• Люкс: 450 сом. / шаб\n• Оилавӣ: 350 сом. / шаб\n\n💎 Ҳамаи нархҳо бо андоз ва хизматрасонии меҳмонхона дохил мебошанд.", "action": None}
         elif lang == 'ru':
-            return {"type": "response", "message": "💰 **Цены на номера:**\n\n• Стандарт: 2500 сом. / ночь\n• Люкс: 4500 сом. / ночь\n• Семейный: 3500 сом. / ночь\n\n💎 Все цены указаны с учетом налогов и обслуживания.", "action": None}
+            return {"type": "response", "message": "💰 **Цены на номера:**\n\n• Стандарт: 250 сом. / ночь\n• Люкс: 450 сом. / ночь\n• Семейный: 350 сом. / ночь\n\n💎 Все цены указаны с учетом налогов и обслуживания.", "action": None}
         else:
-            return {"type": "response", "message": "💰 **Room prices:**\n\n• Standard: 2500 som. / night\n• Lux: 4500 som. / night\n• Family: 3500 som. / night\n\n💎 All prices include taxes and hotel service.", "action": None}
+            return {"type": "response", "message": "💰 **Room prices:**\n\n• Standard: 250 сом. / night\n• Lux: 450 сом. / night\n• Family: 350 сом. / night\n\n💎 All prices include taxes and hotel service.", "action": None}
     
     # ХИЗМАТРАСОНӢ/УСЛУГИ/SERVICES
     elif check_command(['хизмат', 'услуг', 'service'], user_message_lower):
