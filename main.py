@@ -50,7 +50,7 @@ DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
 
 # Конфигурация email
 SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 465
+SMTP_PORT = 443
 EMAIL_ADDRESS = "urunovabduhamid2003@gmail.com"
 EMAIL_PASSWORD = "nogghrulvadjypth"
 
